@@ -72,3 +72,17 @@ List Devices
 ```
 adb devices
 ```
+
+## Debugging
+* Print logs
+
+```
+platforms/android/cordova/log | grep "Web Console"
+```
+
+* Launch App
+
+```
+grunt run:android
+```
+

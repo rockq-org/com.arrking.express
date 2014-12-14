@@ -33,6 +33,13 @@ angular.module('tory.services', ['config'])
 			_getRegistradionID();
 			// set tags
 			_setTag();
+			// callback for openning pushed message ?
+			// need to figure out what this receiveMessageInAndroidCallback about ?
+			// receiveMessageInAndroidCallback v.s. openNotificationInAndroidCallback
+			// window.plugins.jPushPlugin.receiveMessageInAndroidCallback(function(data) {
+			// 	$log.debug("JPushPlugin receiveMessageInAndroidCallback");
+			// 	$log.debug(data);
+			// });
 		} else {
 			$log.error(">>TORY can not get jPushPlugin ...");
 		}
