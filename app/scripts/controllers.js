@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Tory.controllers', [])
+angular.module('tory.controllers', ['tory.services'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
@@ -14,13 +14,13 @@ angular.module('Tory.controllers', [])
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
-    $scope.modal.hide();
-  },
+      $scope.modal.hide();
+    },
 
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
+    // Open the login modal
+    $scope.login = function() {
+      $scope.modal.show();
+    };
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
@@ -35,15 +35,25 @@ angular.module('Tory.controllers', [])
 })
 
 .controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+  $scope.playlists = [{
+    title: 'Reggae',
+    id: 1
+  }, {
+    title: 'Chill',
+    id: 2
+  }, {
+    title: 'Dubstep',
+    id: 3
+  }, {
+    title: 'Indie',
+    id: 4
+  }, {
+    title: 'Rap',
+    id: 5
+  }, {
+    title: 'Cowbell',
+    id: 6
+  }];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+.controller('PlaylistCtrl', function($scope, $stateParams) {});
