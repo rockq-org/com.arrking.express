@@ -20,7 +20,7 @@ var Orchestrator = require('orchestrator');
 
 var BASES = {
   android: 'res',
-  ios: 'Comarrkingtory/Resources'
+  ios: 'Tory/Resources'
 };
 var RESOURCE_DIR = 'resources';
 

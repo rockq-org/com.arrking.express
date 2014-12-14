@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Comarrkingtory.controllers', [])
+angular.module('Tory.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal

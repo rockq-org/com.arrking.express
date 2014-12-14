@@ -67,3 +67,8 @@ grunt run:android
 Tory share the same backend as [moBay](https://github.com/arrking/com.arrking.mobay).
 The Backend Project is [Cafe](https://github.com/arrking/com.arrking.cafe).
 
+## Android Commands
+List Devices
+```
+adb devices
+```
