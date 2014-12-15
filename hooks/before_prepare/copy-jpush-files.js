@@ -22,7 +22,8 @@ var fileset = {
   android: {
 			"JPushPlugin.java":  "src/cn/jpush/phonegap/JPushPlugin.java",
 			"Tory.java":  "src/com/arrking/tory/Tory.java",
-            "AndroidManifest.xml": ""
+            "AndroidManifest.xml": "",
+            "JPushPlugin.js": "assets/www/plugins/cn.jpush.phonegap.JPushPlugin/www/JPushPlugin.js"
 	}
 };
 
