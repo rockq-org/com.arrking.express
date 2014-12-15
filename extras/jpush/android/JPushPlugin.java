@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.util.Map.Entry;
 
 //import com.your.package.name.R;
+import com.arrking.tory.R;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.CustomPushNotificationBuilder;
