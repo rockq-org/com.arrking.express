@@ -5,7 +5,6 @@ node_modules
 .tmp
 .sass-cache
 platforms
-plugins
 www
 *.swp
 *sublime-*
