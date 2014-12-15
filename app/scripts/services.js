@@ -48,11 +48,25 @@ angular.module('tory.services', ['config'])
 	if (typeof window.JpushOpenNotificationInAndroidCallback !== 'function') {
 		$log.debug('>>TORY set JpushOpenNotificationInAndroidCallback ...');
 		window.JpushOpenNotificationInAndroidCallback = function(data) {
-			$log.debug(">>TORY JpushOpenNotificationInAndroidCallback " + data);
-			$log.debug(">>TORY JpushOpenNotificationInAndroidCallback " + typeof data);
+			$log.debug(">>TORY JPushPlugin JpushOpenNotificationInAndroidCallback " + data);
+			$log.debug(">>TORY JPushPlugin JpushOpenNotificationInAndroidCallback " + typeof data);
+			try {
+				var payload = JSON.parse(data);
+				$log.debug(">>TORY JPushPlugin cn.jpush.android.EXTRA: ");
+				$log.debug(JSON.stringify(_.keys(payload.extras['cn.jpush.android.EXTRA'])));
+				$log.debug(typeof payload.extras['cn.jpush.android.EXTRA']);
+			} catch (e) {
+				$log.debug(e);
+			}
 		}
 	}
 
+	if (typeof window.JpushReceiveMessageInAndroidCallback) {
+		$log.debug(">>TROY set JpushReceiveMessageInAndroidCallback ...");
+		window.JpushReceiveMessageInAndroidCallback = function(data) {
+			$log.debug(">>TROY JpushReceiveMessageInAndroidCallback:" + data);
+		}
+	}
 })
 
 ;

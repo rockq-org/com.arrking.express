@@ -1,5 +1,7 @@
 package cn.jpush.phonegap;
 
+import android.util.Log;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
 public class JPushPlugin extends CordovaPlugin {
+	private final static String TAG = new String("JPushPlugin");
 	private final static List<String> methodList = 
 			Arrays.asList(
 					"getRegistrationID",
@@ -78,7 +81,7 @@ public class JPushPlugin extends CordovaPlugin {
 				data.put("extras", jExtras);
 			}		
 		} catch (JSONException e) {
-
+			Log.d(TAG, "notificationObject", e);
 		}
 		return data;
 	}
@@ -90,14 +93,21 @@ public class JPushPlugin extends CordovaPlugin {
 			data.put("alert", alert);
 			JSONObject jExtras = new JSONObject();
 			for(Entry<String,Object> entry:extras.entrySet()){
-				jExtras.put(entry.getKey(),entry.getValue());
+				if(entry.getKey().equals("cn.jpush.android.EXTRA")){
+					Log.d(TAG, String.format("key: %s, value %s", entry.getKey(),(String) entry.getValue()));
+					JSONObject jo = new JSONObject((String)entry.getValue());
+					Log.d(TAG, jo.toString());
+					jExtras.put("cn.jpush.android.EXTRA", jo);
+				}else{
+					jExtras.put(entry.getKey(),entry.getValue());
+				}
 			}
 			if(jExtras.length()>0)
 			{
 				data.put("extras", jExtras);
 			}
-		} catch (JSONException e) {
-
+		} catch (Exception e) {
+			Log.d(TAG, "openNotificationObject", e);
 		}
 		return data;
 	}
