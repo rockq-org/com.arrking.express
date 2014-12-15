@@ -52,6 +52,6 @@
     "org.apache.cordova.statusbar",
     "org.apache.cordova.console",
     "org.apache.cordova.device",
-    "https://github.com/jpush/jpush-phonegap-plugin.git"
+    "extras/jpush-phonegap-plugin"
   ]
 }
