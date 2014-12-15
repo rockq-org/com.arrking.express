@@ -50,6 +50,11 @@ git clone git@github.com:arrking/com.arrking.tory.git
 ### Launch Project
 ```
 cd com.arrking.tory 
+grunt plugins:add:https://github.com/driftyco/ionic-plugins-keyboard.git
+grunt plugins:add:org.apache.cordova.statusbar
+grunt plugins:add:org.apache.cordova.console
+grunt plugins:add:org.apache.cordova.device
+grunt plugin:add:extras/jpush-phonegap-plugin
 grunt platforms:add:android
 grunt run:android
 ```

@@ -5,10 +5,10 @@ node_modules
 .tmp
 .sass-cache
 platforms
-plugins
 www
 *.swp
 *sublime-*
 !mobay.sublime-project
 www-build
 .DS_Store
+plugins
