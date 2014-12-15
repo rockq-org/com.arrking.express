@@ -83,6 +83,11 @@ adb devices
 
 ```
 platforms/android/cordova/log | grep "Web Console"
+
+OR
+
+platforms/android/cordova/log > /tmp/and.log
+tail -f /tmp/and.log| grep "Web Console"
 ```
 
 * Launch App

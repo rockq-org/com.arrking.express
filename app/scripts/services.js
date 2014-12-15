@@ -45,6 +45,11 @@ angular.module('tory.services', ['config'])
 		}
 	}
 
+	window.JpushOpenNotificationInAndroidCallback = function(data){
+		$log.debug(">>TORY JpushOpenNotificationInAndroidCallback " + data);
+		$log.debug(">>TORY JpushOpenNotificationInAndroidCallback " + typeof data);
+	}
+
 })
 
 ;
