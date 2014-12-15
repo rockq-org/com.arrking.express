@@ -1,0 +1,14 @@
+#! /bin/bash 
+###########################################
+# reinstall jpush plugin
+###########################################
+
+# constants
+baseDir=$(cd `dirname "$0"`;pwd)
+# functions
+
+# main 
+[ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "$0" ] || return
+cd $baseDir/..
+grunt plugins:remove:cn.jpush.phonegap.JPushPlugin
+grunt plugins:install:extras/jpush-phonegap-plugin
