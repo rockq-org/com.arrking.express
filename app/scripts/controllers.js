@@ -35,7 +35,7 @@ angular.module('tory.controllers', ['tory.services'])
 })
 
 .controller('OrdersCtrl', function($scope) {
-  $scope.playlists = [{
+  $scope.orders = [{
     title: 'Reggae',
     id: 1
   }, {
