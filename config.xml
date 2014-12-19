@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.arrking.tory" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Tory</name>
+    <name>金矢港湾</name>
     <description>
       a tool for service staffs, handle interactions with moBay.
     </description>
