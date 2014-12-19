@@ -34,7 +34,7 @@ angular.module('tory.controllers', ['tory.services'])
   }
 })
 
-.controller('PlaylistsCtrl', function($scope) {
+.controller('OrdersCtrl', function($scope) {
   $scope.playlists = [{
     title: 'Reggae',
     id: 1
@@ -56,4 +56,7 @@ angular.module('tory.controllers', ['tory.services'])
   }];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {});
+.controller('OrderCtrl', function($scope, $stateParams) {
+  $scope.orderId = $stateParams.orderId;
+
+});

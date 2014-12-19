@@ -36,34 +36,34 @@ angular.module('tory', ['ionic', 'config', 'tory.controllers', 'tory.services'])
   })
 
   .state('app.search', {
-    url: '/search',
+    url: '/my-page',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/my-page.html'
       }
     }
   })
 
 
-  .state('app.playlists', {
-      url: '/playlists',
+  .state('app.orders', {
+      url: '/orders',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
+          templateUrl: 'templates/orders.html',
+          controller: 'OrdersCtrl'
         }
       }
   })
 
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.order', {
+    url: '/order/:orderId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/orderDetail.html',
+        controller: 'OrderCtrl'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/orders');
 });
