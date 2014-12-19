@@ -44,15 +44,8 @@ angular.module('tory', ['ionic', 'config', 'tory.controllers', 'tory.services'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
+
+  .state('app.playlists', {
       url: '/playlists',
       views: {
         'menuContent': {
@@ -60,7 +53,7 @@ angular.module('tory', ['ionic', 'config', 'tory.controllers', 'tory.services'])
           controller: 'PlaylistsCtrl'
         }
       }
-    })
+  })
 
   .state('app.single', {
     url: '/playlists/:playlistId',
