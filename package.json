@@ -2,7 +2,9 @@
   "name": "Tory",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "gulp": "~3.8.10"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "glob": "~4.0.5",
