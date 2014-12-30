@@ -38,6 +38,7 @@
             android:layout_height="30dp"
             android:src="@drawable/actionbar_add_icon"/>
         <ImageView
+            android:id="@+id/actionbar_more_btn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:src="@drawable/actionbar_more_icon"/>

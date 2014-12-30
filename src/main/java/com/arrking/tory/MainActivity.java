@@ -1,6 +1,7 @@
 package com.arrking.tory;
 
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,8 +23,11 @@ import com.arrking.tory.fragments.ClosedOrdersFragment;
 import com.arrking.tory.fragments.InProgressOrdersFragment;
 import com.arrking.tory.fragments.PendingOrdersFragment;
 import com.jauker.widget.BadgeView;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+
+public class MainActivity extends SlidingFragmentActivity implements View.OnClickListener {
 
     private static final String TAG = new String("MainActivity");
     private ViewPager mViewPager;
@@ -38,13 +42,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private BadgeView tab01Badge;
     private BadgeView tab02Badge;
     private BadgeView tab03Badge;
+    private ImageView headerMoreBtn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        initAboveView();
+        initBehindView();
 
+    }
+
+    private void initAboveView() {
         Display display = getWindow().getWindowManager().getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         display.getMetrics(dm);
@@ -90,7 +100,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mDatas.add(tab02);
         mDatas.add(tab03);
 
-
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 
             @Override
@@ -105,39 +114,64 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         };
 
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new LocalPageListener());
+
+        // set header more btn clicking event handler
+        this.headerMoreBtn = (ImageView) findViewById(R.id.actionbar_more_btn);
+        this.headerMoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.i("TAG", position + "," + positionOffset + "," + positionOffsetPixels);
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mLine.getLayoutParams();
-                lp.leftMargin = position * ScreenWidth + (int) (positionOffset * ScreenWidth);
-                mLine.setLayoutParams(lp);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                resetFontColor();
-                switch (position) {
-                    case 0:
-                        text1.setTextColor(Color.parseColor("#008000"));
-                        break;
-                    case 1:
-                        text2.setTextColor(Color.parseColor("#008000"));
-                        break;
-                    case 2:
-                        text3.setTextColor(Color.parseColor("#008000"));
-                        break;
-                }
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void onClick(View v) {
+                toggle();
             }
         });
     }
 
+    private void initBehindView() {
+        setBehindContentView(R.layout.menu_frame);
+        SlidingMenu menu = getSlidingMenu();
+        menu.setMode(SlidingMenu.RIGHT);
+//        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        menu.setShadowDrawable(R.drawable.shadow);
+        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu.setFadeDegree(0.35f);
+//        setSlidingActionBarEnabled(false);
+
+//        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+    }
+
+
+    private class LocalPageListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            Log.i("TAG", position + "," + positionOffset + "," + positionOffsetPixels);
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mLine.getLayoutParams();
+            lp.leftMargin = position * ScreenWidth + (int) (positionOffset * ScreenWidth);
+            mLine.setLayoutParams(lp);
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            resetFontColor();
+            switch (position) {
+                case 0:
+                    text1.setTextColor(Color.parseColor("#008000"));
+                    break;
+                case 1:
+                    text2.setTextColor(Color.parseColor("#008000"));
+                    break;
+                case 2:
+                    text3.setTextColor(Color.parseColor("#008000"));
+                    break;
+            }
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
 
     public void onClick(View v) {
         resetFontColor();
