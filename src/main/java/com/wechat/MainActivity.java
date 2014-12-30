@@ -1,4 +1,4 @@
-package com.arrking.tory;
+package com.wechat;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,11 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.arrking.tory.R;
-import com.arrking.tory.fragments.ChatFragment;
-import com.arrking.tory.fragments.ContactFragment;
-import com.arrking.tory.fragments.ExploreFragment;
 import com.jauker.widget.BadgeView;
 
 public class MainActivity extends FragmentActivity  implements View.OnClickListener {

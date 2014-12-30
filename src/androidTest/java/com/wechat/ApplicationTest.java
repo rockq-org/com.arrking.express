@@ -1,4 +1,4 @@
-package com.arrking;
+package com.wechat;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
