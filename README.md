@@ -1,98 +1,50 @@
-# Arrking Services Tory
-A mobile app for services store.
+## 微信4.2版导航栏效果
+## 1.效果
+![TabHost](http://fangjie-wordpress.stor.sinaapp.com/github/wechattab.gif "效果")
+## 2.讲解
+* ViewPager
+主界面内容显示区域采用ViewPager+Fragment实现，采用FragmentPageAdapter，adapter的内容是Fragment
 
-## What's arrking tory ?
-As the Online to Offline Scenario has a big gap for service provider. Usually they
-don't have a good enough IT System to support their business or they have systems
-isolately.
+* BadgeView
+显示消息提醒数目标记采用的是开源项目[BadgeView](https://github.com/stefanjauker/BadgeView)
 
-Tory is a client tool to handle the interactions between staffs of service provider
-and consumers.
+* 导航栏下面的指示器根据滑动距离发生变化
+原理就是通过改变指示器与左边的margin值来达到移动的效果  
 
-## Persona
-
-### Karen
-Staff who works in kitchen, Karen can claim an order, then she begins to cook the food,
-after all foods are done, she then mark her task as complete. The order then goes 
-to Effie.
-
-### Gail
-Gail is the guest role, she choose what to eat, submit the order.
-
-### Effie
-Effie is a waitress, when karen has done her job, she then pick up the job.
-She can also claim it and complete it. When she complete her job, the process is over.
-
-## Project Management
-Git Repository - https://github.com/arrking/com.arrking.tory 
-
-## Engineering
-
-### Installations
-
-* Install xCode, NodeJS
-
-* Install cordova, ionic
-```
-sudo npm install cordova@3.6.3-0.2.13 -g
-sudo npm install ionic@1.2.8 -g
-sudo npm install ios-sim@3.0.0 cordova-lib@4.0.0 -g
-sudo gem update --system && sudo gem install compass
-sudo npm install generator-ionic@0.6.1 -g
-sudo npm update -g yo # make sure yo@1.1.2
+```java
+LinearLayout.LayoutParams lp= (LinearLayout.LayoutParams) mLine.getLayoutParams();
+lp.leftMargin=position*ScreenWidth+(int)(positionOffset*ScreenWidth);
+mLine.setLayoutParams(lp);
 ```
 
-### Get Source Code
-```
-git clone git@github.com:arrking/com.arrking.tory.git
-```
+### 3. 启动程序
+* 安装工具
+gradle 1.12+, Android Studio 1.0.1+, Java SDK 7+, Ant 1.8+
 
-### Launch Project
+* 下载源码
 ```
-cd com.arrking.tory 
-grunt plugins:add:https://github.com/driftyco/ionic-plugins-keyboard.git
-grunt plugins:add:org.apache.cordova.statusbar
-grunt plugins:add:org.apache.cordova.console
-grunt plugins:add:org.apache.cordova.device
-grunt plugin:add:extras/jpush-phonegap-plugin
-grunt platforms:add:android
-grunt run:android
+git clone git@github.com:JayFang1993/AndroidUtil.git 
 ```
 
-
-### Get started
-
-* [Cordova](http://git.oschina.net/ubiware/tech-books/blob/master/apache-cordova-3-programming.pdf)
-* [Ionic](http://ionicframework.com/)
-* [AngularJS](http://git.oschina.net/ubiware/tech-books/blob/master/AngularJSIn60MinutesIsh_DanWahlin_May2013.pdf)
-
-
-## Implementation of Tory
-
-Tory share the same backend as [moBay](https://github.com/arrking/com.arrking.mobay).
-The Backend Project is [Cafe](https://github.com/arrking/com.arrking.cafe).
-
-## Android Commands
-List Devices
+* 下载依赖, 打包APK
 ```
-adb devices
+cd AndroidUtil/WechatTab
+gradle wrapper
+./gradlew clean assembleRelease
 ```
+现在，检查 ```./build/outputs/apk/WechatTab-release-unsigned.apk``` .
 
-## Debugging
-* Print logs
-
+* 声称 IntelliJ IDEA || Android Studio Project
 ```
-platforms/android/cordova/log | grep "Web Console"
+./gradlew idea
+```
+然后，打开IDE，添加项目即可。
 
-OR
-
-platforms/android/cordova/log > /tmp/and.log
-tail -f /tmp/and.log| grep "Web Console"
+* 其他命令
+```
+./gradlew task
 ```
 
-* Launch App
-
-```
-grunt run:android
-```
-
+* 声称
+详细介绍：http://fangjie.info/
+### 作者:by[@方杰_Jay](http://weibo.com/ncuitstudent) 

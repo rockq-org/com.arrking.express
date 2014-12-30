@@ -1,14 +1,13 @@
-# Specifies intentionally untracked files to ignore when using Git
-# http://git-scm.com/docs/gitignore
-
-node_modules
-.tmp
-.sass-cache
-platforms
-www
+/build
 *.swp
-*sublime-*
-!mobay.sublime-project
-www-build
-.DS_Store
-plugins
+gradle/ 
+.gradle
+gradlew
+gradlew.bat
+
+# idea
+.idea
+*.iml
+WechatTab.ipr
+WechatTab.iws
+WechatTab.iml
