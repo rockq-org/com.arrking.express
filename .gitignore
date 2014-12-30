@@ -8,6 +8,5 @@ gradlew.bat
 # idea
 .idea
 *.iml
-WechatTab.ipr
-WechatTab.iws
-WechatTab.iml
+*.ipr
+*.iws
