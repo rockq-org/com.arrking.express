@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.arrking.tory.R;
 
 
-public class ChatFragment extends Fragment {
+public class PendingOrdersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

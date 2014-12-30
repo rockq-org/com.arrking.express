@@ -16,10 +16,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arrking.tory.R;
-import com.arrking.tory.fragments.ChatFragment;
-import com.arrking.tory.fragments.ContactFragment;
-import com.arrking.tory.fragments.ExploreFragment;
+import com.arrking.tory.fragments.ClosedOrdersFragment;
+import com.arrking.tory.fragments.InProgressOrdersFragment;
+import com.arrking.tory.fragments.PendingOrdersFragment;
 import com.jauker.widget.BadgeView;
 
 public class MainActivity extends FragmentActivity  implements View.OnClickListener {
@@ -59,9 +58,9 @@ public class MainActivity extends FragmentActivity  implements View.OnClickListe
         badge.setBadgeCount(99);
 
         mDatas=new ArrayList<Fragment>();
-        ContactFragment tab03=new ContactFragment();
-        ExploreFragment tab02=new ExploreFragment();
-        ChatFragment tab01=new ChatFragment();
+        ClosedOrdersFragment tab03=new ClosedOrdersFragment();
+        InProgressOrdersFragment tab02=new InProgressOrdersFragment();
+        PendingOrdersFragment tab01=new PendingOrdersFragment();
 
         mDatas.add(tab01);
         mDatas.add(tab02);

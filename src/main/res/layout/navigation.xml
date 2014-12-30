@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="15sp"
                 android:id="@+id/text1"
-                android:text="聊天"
+                android:text="@string/tab01_name"
                 android:textColor="#008000"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
-                android:text="发现"
+                android:text="@string/tab02_name"
                 android:id="@+id/text2"
                 android:textSize="15sp"
                 android:layout_height="wrap_content"/>
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
-                android:text="通讯录"
+                android:text="@string/tab03_name"
                 android:id="@+id/text3"
                 android:textSize="15sp"
                 android:layout_height="wrap_content"/>

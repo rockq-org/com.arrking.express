@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import com.arrking.tory.R;
 
 
-public class ContactFragment extends Fragment {
+public class InProgressOrdersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab03,container,false);
+        return inflater.inflate(R.layout.tab02,container,false);
     }
 }
