@@ -1,10 +1,8 @@
-package com.arrking.tory;
+package com.arrking.express;
 
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -19,9 +17,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arrking.tory.fragments.ClosedOrdersFragment;
-import com.arrking.tory.fragments.InProgressOrdersFragment;
-import com.arrking.tory.fragments.PendingOrdersFragment;
+import com.arrking.express.fragments.ClosedOrdersFragment;
+import com.arrking.express.fragments.InProgressOrdersFragment;
+import com.arrking.express.fragments.PendingOrdersFragment;
 import com.jauker.widget.BadgeView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
