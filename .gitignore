@@ -10,3 +10,4 @@ gradlew.bat
 *.iml
 *.ipr
 *.iws
+libraries/SlidingMenu/build/outputs/
