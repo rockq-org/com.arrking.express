@@ -6,10 +6,9 @@
     <dimen name="list_padding">10dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
     <integer name="num_cols">1</integer>
-
     <dimen name="text_size">18sp</dimen>
     <dimen name="text_size_small">15sp</dimen>
-
+    <dimen name="avatar_border_width">1dp</dimen>
     <dimen name="image_view_small_avatar_layout_width">53dp</dimen>
     <dimen name="image_view_small_avatar_layout_height">53dp</dimen>
     <dimen name="image_view_big_avatar_layout_width">70dp</dimen>

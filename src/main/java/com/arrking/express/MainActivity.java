@@ -125,7 +125,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     }
 
     private void initBehindView() {
-        setBehindContentView(R.layout.menu_frame);
+        setBehindContentView(R.layout.profile_slider);
         SlidingMenu menu = getSlidingMenu();
         menu.setMode(SlidingMenu.RIGHT);
 //        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
