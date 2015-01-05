@@ -74,6 +74,7 @@
 
             </LinearLayout>
 
+
             <TextView
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
@@ -167,6 +168,17 @@
                     android:textColor="@color/link_text_color"
                     android:textSize="@dimen/text_size" />
             </RelativeLayout>
+
+
         </LinearLayout>
     </ScrollView>
+    <ImageButton
+        android:id="@+id/logout_imagebutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_general_selector"
+        android:paddingBottom="30dip"
+        android:src="@drawable/ic_logout" />
 </FrameLayout>
