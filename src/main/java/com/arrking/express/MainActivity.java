@@ -126,13 +126,13 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
     private void initBehindView() {
         setBehindContentView(R.layout.profile_slider);
-        SlidingMenu menu = getSlidingMenu();
-        menu.setMode(SlidingMenu.RIGHT);
+        SlidingMenu slider = getSlidingMenu();
+        slider.setMode(SlidingMenu.RIGHT);
 //        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-        menu.setShadowDrawable(R.drawable.shadow);
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        menu.setFadeDegree(0.35f);
+        slider.setShadowWidthRes(R.dimen.shadow_width);
+        slider.setShadowDrawable(R.drawable.shadow);
+        slider.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        slider.setFadeDegree(0.35f);
 //        setSlidingActionBarEnabled(false);
 
 //        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
