@@ -31,7 +31,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends SlidingFragmentActivity implements View.OnClickListener {
 
-    private static final String TAG = new String("MainActivity");
+    private static final String TAG = new String(MainActivity.class.getName());
     private ViewPager mViewPager;
     private List<Fragment> mDatas;
     private FragmentPagerAdapter mAdapter;
