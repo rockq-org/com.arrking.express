@@ -45,14 +45,14 @@ public class ProfilePageFragment extends Fragment {
         this.prf_email.setText("foo@arrking.com");
         this.prf_name.setText("张三");
         this.prf_phone.setText("+86-15888888888");
-//        ImageLoader.getInstance().displayImage("http://pic.jschina.com.cn/0/12/19/62/12196279_843728.jpg",
-//                avatarImageView, Constants.UIL_USER_AVATAR_DISPLAY_OPTIONS);
+        ImageLoader.getInstance().displayImage("http://pic.jschina.com.cn/0/12/19/62/12196279_843728.jpg",
+                avatarImageView, Constants.UIL_USER_AVATAR_DISPLAY_OPTIONS);
     }
 
     private void initView() {
         this.prf_email = (TextView) this.prf_layout.findViewById(R.id.email_textview);
         this.prf_name = (EditText) this.prf_layout.findViewById(R.id.fullname_edittext);
         this.prf_phone = (EditText) this.prf_layout.findViewById(R.id.phone_edittext);
-//        this.avatarImageView = (RoundedImageView) this.prf_layout.findViewById(R.id.avatar_imageview);
+        this.avatarImageView = (RoundedImageView) this.prf_layout.findViewById(R.id.avatar_imageview);
     }
 }

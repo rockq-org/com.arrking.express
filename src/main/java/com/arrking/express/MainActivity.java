@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arrking.android.util.ImageUtil;
 import com.arrking.express.fragments.ClosedOrdersFragment;
 import com.arrking.express.fragments.InProgressOrdersFragment;
 import com.arrking.express.fragments.PendingOrdersFragment;
@@ -25,6 +26,7 @@ import com.arrking.express.fragments.ProfilePageFragment;
 import com.jauker.widget.BadgeView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 public class MainActivity extends SlidingFragmentActivity implements View.OnClickListener {
@@ -49,6 +51,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        // setup Android-Universal-Image-Loader
+        ImageLoader.getInstance().init(ImageUtil.getImageLoaderConfiguration(this));
         initAboveView();
         initBehindView();
 
