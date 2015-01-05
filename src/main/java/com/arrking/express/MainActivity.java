@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arrking.android.database.Properties;
 import com.arrking.android.util.ImageUtil;
 import com.arrking.express.fragments.ClosedOrdersFragment;
 import com.arrking.express.fragments.InProgressOrdersFragment;
@@ -55,7 +56,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         ImageLoader.getInstance().init(ImageUtil.getImageLoaderConfiguration(this));
         initAboveView();
         initBehindView();
-
     }
 
     private void initAboveView() {
