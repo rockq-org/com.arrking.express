@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -133,6 +134,11 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         slider.setShadowDrawable(R.drawable.shadow);
         slider.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         slider.setFadeDegree(0.35f);
+
+//        FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
+//        ProfilePageFragment prof = new ProfilePageFragment();
+//        t.replace(R.layout.profile_slider, prof);
+//        t.commit();
 //        setSlidingActionBarEnabled(false);
 
 //        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
