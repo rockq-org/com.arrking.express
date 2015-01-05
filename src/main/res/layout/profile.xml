@@ -41,19 +41,6 @@
                     app:border_color="@color/dark_gray"
                     app:border_width="@dimen/avatar_border_width"
                     app:oval="true" />
-
-                <TextView
-                    android:id="@+id/avatar_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:paddingRight="70dp"
-                    android:text="@string/sup_choose_user_picture"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="@dimen/text_size" />
             </LinearLayout>
 
             <LinearLayout
