@@ -8,4 +8,14 @@
     <string name="tab01_name">排队中</string>
     <string name="tab02_name">处理中</string>
     <string name="tab03_name">已关闭</string>
+    <string name="sup_choose_user_picture">选择照片作为头像</string>
+
+    <!-- Profile Page -->
+    <string name="prf_email">邮箱</string>
+    <string name="prf_full_name">名字</string>
+    <string name="prf_change">更改</string>
+    <string name="prf_title">我的资料</string>
+    <string name="prf_phone">电话</string>
+    <string name="prf_status_message">状态</string>
+    <string name="prf_done">完成</string>
 </resources>
