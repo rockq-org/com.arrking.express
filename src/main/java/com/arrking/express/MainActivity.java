@@ -21,6 +21,7 @@ import java.util.List;
 import com.arrking.express.fragments.ClosedOrdersFragment;
 import com.arrking.express.fragments.InProgressOrdersFragment;
 import com.arrking.express.fragments.PendingOrdersFragment;
+import com.arrking.express.fragments.ProfilePageFragment;
 import com.jauker.widget.BadgeView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -126,22 +127,19 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     }
 
     private void initBehindView() {
-        setBehindContentView(R.layout.profile_slider);
+        setBehindContentView(R.layout.sliding_menu);
         SlidingMenu slider = getSlidingMenu();
         slider.setMode(SlidingMenu.RIGHT);
-//        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         slider.setShadowWidthRes(R.dimen.shadow_width);
         slider.setShadowDrawable(R.drawable.shadow);
         slider.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         slider.setFadeDegree(0.35f);
 
-//        FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
-//        ProfilePageFragment prof = new ProfilePageFragment();
-//        t.replace(R.layout.profile_slider, prof);
-//        t.commit();
-//        setSlidingActionBarEnabled(false);
-
-//        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+        FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
+        ProfilePageFragment prof = new ProfilePageFragment();
+        t.replace(R.id.sliding_menu_content, prof);
+        t.commit();
+        setSlidingActionBarEnabled(false);
     }
 
 
