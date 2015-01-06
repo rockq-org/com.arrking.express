@@ -21,10 +21,6 @@ import com.arrking.express.model.ErrorMessage;
 import com.arrking.express.model.User;
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-
-import cn.trinea.android.common.util.StringUtils;
-
 /**
  * Created by hain on 06/01/2015.
  */
@@ -40,12 +36,14 @@ public class LoginPageActivity extends Activity {
     private static LoadingUI loadingUI;
 
 
-    private static Handler handler = new Handler() {
+    private Handler handler = new Handler() {
+
         @Override
         public void handleMessage(Message msg) {
             String resp = (String) msg.getData().get("RESPONSE");
             Log.d(CLASSNAME, resp);
             Gson gson = new Gson();
+            LoginPageActivity.this.removeLoading();
             switch (msg.what) {
                 case 200:
                     User user = gson.fromJson(resp, User.class);
@@ -62,7 +60,7 @@ public class LoginPageActivity extends Activity {
             }
         }
     };
-    private static HTTPRequestHelper httpRequestHelper = new HTTPRequestHelper(handler);
+    private HTTPRequestHelper httpRequestHelper = new HTTPRequestHelper(handler);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,7 +115,7 @@ public class LoginPageActivity extends Activity {
         attemptsLeftTV.setText(getResources().getString(R.string.login_attempt) + Integer.toString(numberOfRemainingLoginAttempts));
     }
 
-    protected void addLoading() {
+    public void addLoading() {
         FrameLayout rootFrameLayout = (FrameLayout) this.getWindow().getDecorView();
         if (loadingUI == null) {
             loadingUI = new LoadingUI(this, this.getResources().getString(R.string.login_loading_tip));
