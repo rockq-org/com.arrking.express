@@ -1,11 +1,15 @@
 package com.arrking.express;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.arrking.android.database.Properties;
 import com.arrking.android.exception.DBException;
@@ -59,6 +63,9 @@ public class SplashScreenActivity extends Activity {
                     SplashScreenActivity.this.startActivity(i);
                     SplashScreenActivity.this.finish();
                     break;
+                case 500:
+                    Log.w(CLASSNAME, "timeout event happens ? or server is broken ?");
+                    break;
                 default:
                     // just bring user to login page
                     // TODO check it network, maybe there is no connection
@@ -111,19 +118,52 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.splash_screen);
         properties = Properties.getInstance(this);
         httpRequestHelper = new HTTPRequestHelper(httpReqHandler);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (StringUtils.isEmpty(properties.get("userId")) ||
-                        StringUtils.isEmpty(properties.get("userPassword"))
-                        ) {
-                    Log.d(CLASSNAME, "user is not available.");
-                    handler.sendEmptyMessage(LOGIN_NONE);
-                } else {
-                    Log.d(CLASSNAME, "user is available");
-                    handler.sendEmptyMessage(LOGIN_AVIL);
+        if (checkInternetConnection(this)) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (StringUtils.isEmpty(properties.get("userId")) ||
+                            StringUtils.isEmpty(properties.get("userPassword"))
+                            ) {
+                        Log.d(CLASSNAME, "user is not available.");
+                        handler.sendEmptyMessage(LOGIN_NONE);
+                    } else {
+                        Log.d(CLASSNAME, "user is available");
+                        handler.sendEmptyMessage(LOGIN_AVIL);
+                    }
                 }
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+            }, SPLASH_DISPLAY_LENGTH);
+        } else {
+            // the network is unavailable
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.login_no_network_tip),
+                    Toast.LENGTH_SHORT).show();
+            (new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        Log.e(CLASSNAME, "kill app", e);
+                    }
+                    SplashScreenActivity.this.finish();
+                }
+            })).start();
+        }
+
+    }
+
+    /**
+     * THIS IS FUNCTION FOR CHECKING INTERNET CONNECTION
+     *
+     * @return TRUE IF INTERNET IS PRESENT ELSE RETURN FALSE
+     */
+    public boolean checkInternetConnection(Context c) {
+        ConnectivityManager cm = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isAvailable() && cm.getActiveNetworkInfo().isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

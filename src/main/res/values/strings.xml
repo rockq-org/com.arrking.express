@@ -19,6 +19,7 @@
     <string name="login_loading_tip">登陆中...</string>
     <string name="login_error">用户名或密码错误</string>
     <string name="login_validation">用户名或密码不能为空</string>
+    <string name="login_no_network_tip">没有连接到Internet, 应用即将退出。</string>
 
     <!-- Profile Page -->
     <string name="prf_email">邮箱</string>
