@@ -61,6 +61,10 @@ public class Properties implements SelectionQueryBuilder.Op {
         }
     }
 
+    public boolean hasKey(String key) {
+        return getId(key) == -1L ? false : true;
+    }
+
     // if the key does not exist, return -1L
     private Long getId(String key) {
         Long id = -1L;
