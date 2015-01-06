@@ -1,6 +1,7 @@
 package com.arrking.express;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,9 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arrking.android.component.LoadingUI;
 import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.common.ServerURLHelper;
 import com.arrking.express.model.ErrorMessage;
@@ -34,6 +37,8 @@ public class LoginPageActivity extends Activity {
     private TextView loginLockedTV;
     private TextView attemptsLeftTV;
     private int numberOfRemainingLoginAttempts = 3;
+    private static LoadingUI loadingUI;
+
 
     private static Handler handler = new Handler() {
         @Override
@@ -85,12 +90,12 @@ public class LoginPageActivity extends Activity {
                 loginLockedTV.setTextColor(getResources().getColor(R.color.white));
                 loginLockedTV.setText(R.string.login_locked);
                 attemptsLeftTV.setVisibility(View.INVISIBLE);
-                login.setVisibility(View.INVISIBLE);
             }
         }
     }
 
     private boolean validateUsernameAndPassword(final String u, final String pass) {
+        addLoading();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -110,5 +115,21 @@ public class LoginPageActivity extends Activity {
         loginLockedTV = (TextView) findViewById(R.id.loginLockedTV);
         attemptsLeftTV = (TextView) findViewById(R.id.attemptsLeftTV);
         attemptsLeftTV.setText(getResources().getString(R.string.login_attempt) + Integer.toString(numberOfRemainingLoginAttempts));
+    }
+
+    protected void addLoading() {
+        FrameLayout rootFrameLayout = (FrameLayout) this.getWindow().getDecorView();
+        if (loadingUI == null) {
+            loadingUI = new LoadingUI(this, this.getResources().getString(R.string.login_loading_tip));
+            FrameLayout.LayoutParams localLayoutParams = new FrameLayout.LayoutParams(-2, -2, 17);
+            loadingUI.setLayoutParams(localLayoutParams);
+            loadingUI.setVisiable(0);
+        }
+        rootFrameLayout.addView(loadingUI);
+    }
+
+    public void removeLoading() {
+        ((FrameLayout) this.getWindow().getDecorView()).removeView(loadingUI);
+        loadingUI = null;
     }
 }

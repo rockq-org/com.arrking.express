@@ -16,6 +16,7 @@
     <string name="login_submit">登入</string>
     <string name="login_locked">登陆锁定 !!! \n 联系管理员 或 重启动应用</string>
     <string name="login_attempt">还可以尝试 %d 次</string>
+    <string name="login_loading_tip">登陆中...</string>
 
     <!-- Profile Page -->
     <string name="prf_email">邮箱</string>
