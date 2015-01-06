@@ -9,7 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
+import com.arrking.android.exception.DBException;
+
 import java.util.HashMap;
+
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * Store Key Value Pair in database
@@ -45,6 +49,37 @@ public class Properties implements SelectionQueryBuilder.Op {
         return db.insert(DB_TABLE, null, cv);
     }
 
+    public void update(String key, String value) throws DBException {
+        Long id = getId(key);
+        if (id > -1L) {
+            ContentValues c = new ContentValues();
+            c.put("name", key);
+            c.put("value", value);
+            db.update(DB_TABLE, c, "_id=?", new String[]{Long.toString(id)});
+        } else {
+            throw new DBException(String.format("name [ %s ] does not exist in properties db.", key));
+        }
+    }
+
+    // if the key does not exist, return -1L
+    private Long getId(String key) {
+        Long id = -1L;
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(DB_TABLE);
+        SelectionQueryBuilder sqb = new SelectionQueryBuilder();
+        sqb.expr("name", EQ, key);
+        //  query (SQLiteDatabase db, String[] projectionIn, String selection, String[] selectionArgs, String groupBy, String having, String sortOrder)
+        Cursor c = queryBuilder.query(db, null, sqb.toString(), sqb.getArgsArray(), null, null, null);
+        if (c.moveToFirst()) {
+            id = c.getLong(0);
+            Log.d(CLASSNAME, String.format("get key %s id %s", key, id));
+        } else {
+            Log.d(CLASSNAME, String.format("can not find value with key %s", key));
+        }
+        return id;
+    }
+
+    // if the key does not exist, return null.
     public String get(String key) {
         String id = null;
         String value = null;

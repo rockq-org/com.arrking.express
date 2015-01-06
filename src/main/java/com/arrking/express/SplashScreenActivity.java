@@ -8,6 +8,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.arrking.android.database.Properties;
+import com.arrking.android.exception.DBException;
 
 import cn.trinea.android.common.util.StringUtils;
 
@@ -48,15 +49,14 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.splash_screen);
         properties = Properties.getInstance(this);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (StringUtils.isEmpty(properties.get("username"))) {
-                    Log.d(CLASSNAME, "user is available.");
+                    Log.d(CLASSNAME, "user is not available.");
                     handler.sendEmptyMessage(LOGIN_NONE);
                 } else {
-                    Log.d(CLASSNAME, "user is not available");
+                    Log.d(CLASSNAME, "user is available");
                     handler.sendEmptyMessage(LOGIN_AVIL);
                 }
             }
