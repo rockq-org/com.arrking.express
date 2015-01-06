@@ -1,6 +1,7 @@
 package com.arrking.express;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,8 @@ import com.arrking.express.common.ServerURLHelper;
 import com.arrking.express.model.ErrorMessage;
 import com.arrking.express.model.User;
 import com.google.gson.Gson;
+
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * Created by hain on 06/01/2015.
@@ -47,11 +50,24 @@ public class LoginPageActivity extends Activity {
                 case 200:
                     User user = gson.fromJson(resp, User.class);
                     Log.d(CLASSNAME, " get username " + user.getFirstName());
-
+                    // save the credentials into properties
+                    properties.save("userFirstName", user.getFirstName());
+                    properties.save("userLastName", user.getLastName());
+                    properties.save("userEmail", user.getEmail());
+                    properties.save("userId", user.getId());
+                    properties.save("userUrl", user.getUrl());
+                    Intent iMain = new Intent(LoginPageActivity.this, MainActivity.class);
+                    startActivity(iMain);
+                    LoginPageActivity.this.finish();
                     break;
                 case 401:
                     ErrorMessage err = gson.fromJson(resp, ErrorMessage.class);
                     Log.w(CLASSNAME, " get error " + err.getErrorMessage());
+                    // toast the error
+                    username.setText("");
+                    password.setText("");
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.login_error),
+                            Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Log.e(CLASSNAME, String.format("unknown msg.what %d from httpRequestHelper",
@@ -71,29 +87,36 @@ public class LoginPageActivity extends Activity {
     }
 
     public void authenticateLogin(View view) {
-        // TODO check the username and password should not be null or empty
-        if (validateUsernameAndPassword(username.getText().toString(), password.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Hello admin!",
+        String userNameVal = username.getText().toString();
+        String passVal = password.getText().toString();
+        if (StringUtils.isEmpty(userNameVal) ||
+                StringUtils.isEmpty(passVal)) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.login_validation),
                     Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Seems like you 're not admin!",
-                    Toast.LENGTH_SHORT).show();
-            numberOfRemainingLoginAttempts--;
-            attemptsLeftTV.setVisibility(View.VISIBLE);
-            attemptsLeftTV.setText(String.format(getResources().getString(R.string.login_attempt), numberOfRemainingLoginAttempts));
-
-            if (numberOfRemainingLoginAttempts == 0) {
-                login.setEnabled(false);
-                loginLockedTV.setVisibility(View.VISIBLE);
-                loginLockedTV.setBackgroundColor(getResources().getColor(R.color.red));
-                loginLockedTV.setTextColor(getResources().getColor(R.color.white));
-                loginLockedTV.setText(R.string.login_locked);
-                attemptsLeftTV.setVisibility(View.INVISIBLE);
-            }
+            validateUsernameAndPassword(userNameVal, passVal);
         }
+//        restrict the user attempt to login
+//        if () {
+//        } else {
+//            Toast.makeText(getApplicationContext(), "Seems like you 're not admin!",
+//                    Toast.LENGTH_SHORT).show();
+//            numberOfRemainingLoginAttempts--;
+//            attemptsLeftTV.setVisibility(View.VISIBLE);
+//            attemptsLeftTV.setText(String.format(getResources().getString(R.string.login_attempt), numberOfRemainingLoginAttempts));
+//
+//            if (numberOfRemainingLoginAttempts == 0) {
+//                login.setEnabled(false);
+//                loginLockedTV.setVisibility(View.VISIBLE);
+//                loginLockedTV.setBackgroundColor(getResources().getColor(R.color.red));
+//                loginLockedTV.setTextColor(getResources().getColor(R.color.white));
+//                loginLockedTV.setText(R.string.login_locked);
+//                attemptsLeftTV.setVisibility(View.INVISIBLE);
+//            }
+//        }
     }
 
-    private boolean validateUsernameAndPassword(final String u, final String pass) {
+    private void validateUsernameAndPassword(final String u, final String pass) {
         addLoading();
         new Thread(new Runnable() {
             @Override
@@ -104,7 +127,6 @@ public class LoginPageActivity extends Activity {
                         ServerURLHelper.getJSONHeaders());
             }
         }).start();
-        return true;
     }
 
     private void setupVariables() {
