@@ -1,6 +1,7 @@
 package com.arrking.express;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.arrking.android.component.LoadingUI;
 import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
+import com.arrking.express.common.Constants;
 import com.arrking.express.common.ServerURLHelper;
 import com.arrking.express.model.ErrorMessage;
 import com.arrking.express.model.User;
@@ -51,12 +53,12 @@ public class LoginPageActivity extends Activity {
                     User user = gson.fromJson(resp, User.class);
                     Log.d(CLASSNAME, " get username " + user.getFirstName());
                     // save the credentials into properties
-                    properties.save("userFirstName", user.getFirstName());
-                    properties.save("userLastName", user.getLastName());
-                    properties.save("userEmail", user.getEmail());
-                    properties.save("userId", user.getId());
-                    properties.save("userUrl", user.getUrl());
-                    properties.save("userPassword", password.getText().toString());
+                    properties.save(Constants.USER_FIRST_NAME, user.getFirstName());
+                    properties.save(Constants.USER_LAST_NAME, user.getLastName());
+                    properties.save(Constants.USER_EMAIL, user.getEmail());
+                    properties.save(Constants.USER_ID, user.getId());
+                    properties.save(Constants.USER_URL, user.getUrl());
+                    properties.save(Constants.USER_PASSWORD, password.getText().toString());
                     Intent iMain = new Intent(LoginPageActivity.this, MainActivity.class);
                     startActivity(iMain);
                     LoginPageActivity.this.finish();

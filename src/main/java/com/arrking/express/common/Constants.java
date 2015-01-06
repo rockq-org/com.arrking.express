@@ -12,4 +12,12 @@ public class Constants {
     public static final int serverPort = -1;
     public static final String serverRestRootPath = "service";
 
+    // user properties names
+    public static final String USER_FIRST_NAME = "userFirstName";
+    public static final String USER_LAST_NAME = "userLastName";
+    public static final String USER_EMAIL = "userEmail";
+    public static final String USER_ID = "userId";
+    public static final String USER_URL = "userUrl";
+    public static final String USER_PASSWORD = "userPassword";
+
 }

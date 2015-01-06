@@ -28,14 +28,16 @@ public class ProfilePageFragment extends Fragment {
     private static final String CLASSNAME = ProfilePageFragment.class.getName();
     private FrameLayout prf_layout;
     private TextView prf_email;
-    private EditText prf_name;
-    private EditText prf_phone;
+    private TextView prf_name;
+    private TextView prf_id;
     private RoundedImageView avatarImageView;
     private ImageView logoutBtn;
+    Properties p;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        p = Properties.getInstance(getActivity());
     }
 
     @Override
@@ -50,29 +52,30 @@ public class ProfilePageFragment extends Fragment {
     }
 
     private void loadUserData() {
-        this.prf_email.setText("foo@arrking.com");
-        this.prf_name.setText("张三");
-        this.prf_phone.setText("+86-15888888888");
-        ImageLoader.getInstance().displayImage("http://pic.jschina.com.cn/0/12/19/62/12196279_843728.jpg",
+        this.prf_email.setText(p.get(com.arrking.express.common.Constants.USER_EMAIL));
+        this.prf_name.setText(String.format("%s %s",
+                p.get(com.arrking.express.common.Constants.USER_LAST_NAME),
+                p.get(com.arrking.express.common.Constants.USER_FIRST_NAME)));
+        this.prf_id.setText(p.get(com.arrking.express.common.Constants.USER_ID));
+        ImageLoader.getInstance().displayImage("http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-11/96/customer-service-icon.png",
                 avatarImageView, Constants.UIL_USER_AVATAR_DISPLAY_OPTIONS);
     }
 
     private void initView() {
         this.prf_email = (TextView) this.prf_layout.findViewById(R.id.email_textview);
-        this.prf_name = (EditText) this.prf_layout.findViewById(R.id.fullname_edittext);
-        this.prf_phone = (EditText) this.prf_layout.findViewById(R.id.phone_edittext);
+        this.prf_name = (TextView) this.prf_layout.findViewById(R.id.fullname_edittext);
+        this.prf_id = (TextView) this.prf_layout.findViewById(R.id.phone_edittext);
         this.avatarImageView = (RoundedImageView) this.prf_layout.findViewById(R.id.avatar_imageview);
         this.logoutBtn = (ImageView) this.prf_layout.findViewById(R.id.logout_imagebutton);
         this.logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Properties p = Properties.getInstance(getActivity());
-                p.rm("userFirstName");
-                p.rm("userLastName");
-                p.rm("userEmail");
-                p.rm("userId");
-                p.rm("userUrl");
-                p.rm("userPassword");
+                p.rm(com.arrking.express.common.Constants.USER_FIRST_NAME);
+                p.rm(com.arrking.express.common.Constants.USER_LAST_NAME);
+                p.rm(com.arrking.express.common.Constants.USER_EMAIL);
+                p.rm(com.arrking.express.common.Constants.USER_ID);
+                p.rm(com.arrking.express.common.Constants.USER_URL);
+                p.rm(com.arrking.express.common.Constants.USER_PASSWORD);
                 Intent i = new Intent(getActivity(), LoginPageActivity.class);
                 startActivity(i);
                 getActivity().finish();

@@ -29,4 +29,5 @@
     <string name="prf_phone">电话</string>
     <string name="prf_status_message">状态</string>
     <string name="prf_done">完成</string>
+    <string name="prf_user_id">ID</string>
 </resources>
