@@ -74,6 +74,13 @@ public class Properties implements SelectionQueryBuilder.Op {
         }
     }
 
+    // remove key-value pair
+    public void rm(String key) {
+        if (hasKey(key)) {
+            db.delete(DB_TABLE, String.format("_id=%d", getId(key)), null);
+        }
+    }
+
     // check if the key exist
     public boolean hasKey(String key) {
         return getId(key) == -1L ? false : true;
