@@ -56,6 +56,7 @@ public class LoginPageActivity extends Activity {
                     properties.save("userEmail", user.getEmail());
                     properties.save("userId", user.getId());
                     properties.save("userUrl", user.getUrl());
+                    properties.save("userPassword", password.getText().toString());
                     Intent iMain = new Intent(LoginPageActivity.this, MainActivity.class);
                     startActivity(iMain);
                     LoginPageActivity.this.finish();

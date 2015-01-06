@@ -9,6 +9,11 @@ import android.util.Log;
 
 import com.arrking.android.database.Properties;
 import com.arrking.android.exception.DBException;
+import com.arrking.android.util.HTTPRequestHelper;
+import com.arrking.express.common.ServerURLHelper;
+import com.arrking.express.model.ErrorMessage;
+import com.arrking.express.model.User;
+import com.google.gson.Gson;
 
 import cn.trinea.android.common.util.StringUtils;
 
@@ -22,6 +27,50 @@ public class SplashScreenActivity extends Activity {
     private final int LOGIN_NONE = 1;
     private final int LOGIN_AVIL = 2;
 
+    private HTTPRequestHelper httpRequestHelper;
+
+    private Handler httpReqHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Gson gson = new Gson();
+            String resp = (String) msg.getData().get("RESPONSE");
+            Log.d(CLASSNAME, resp);
+            switch (msg.what) {
+                case 200:
+                    String userIdVal = properties.get("userId");
+                    Log.d(CLASSNAME, String.format("User %s logged in successfully.",
+                            properties.get("userId")));
+                    User u = gson.fromJson(resp, User.class);
+                    if (userIdVal.equals(u.getId())) {
+                        Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+                        SplashScreenActivity.this.startActivity(i);
+                        SplashScreenActivity.this.finish();
+                    } else {
+                        Intent i = new Intent(SplashScreenActivity.this, LoginPageActivity.class);
+                        SplashScreenActivity.this.startActivity(i);
+                        SplashScreenActivity.this.finish();
+                    }
+                    break;
+                case 401:
+                    ErrorMessage err = gson.fromJson(resp, ErrorMessage.class);
+                    Log.w(CLASSNAME, String.format("Can not login user %s .",
+                            properties.get("userId")));
+                    Intent i = new Intent(SplashScreenActivity.this, LoginPageActivity.class);
+                    SplashScreenActivity.this.startActivity(i);
+                    SplashScreenActivity.this.finish();
+                    break;
+                default:
+                    // just bring user to login page
+                    // TODO check it network, maybe there is no connection
+                    Log.w(CLASSNAME, "what happens ??");
+                    Intent it = new Intent(SplashScreenActivity.this, LoginPageActivity.class);
+                    SplashScreenActivity.this.startActivity(it);
+                    SplashScreenActivity.this.finish();
+                    break;
+            }
+        }
+    };
+
     private static Properties properties;
     private Handler handler = new Handler() {
         @Override
@@ -33,13 +82,25 @@ public class SplashScreenActivity extends Activity {
                     SplashScreenActivity.this.finish();
                     break;
                 case LOGIN_AVIL:
-                    Intent mainIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                    SplashScreenActivity.this.startActivity(mainIntent);
-                    SplashScreenActivity.this.finish();
+                    final String userId = new String(properties.get("userId"));
+                    final String userPass = new String(properties.get("userPassword"));
+                    // request network
+                    (new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            httpRequestHelper.performGet(ServerURLHelper.getLoginURL(userId),
+                                    userId,
+                                    userPass,
+                                    ServerURLHelper.getJSONHeaders());
+                        }
+                    })).start();
+
+
                     break;
             }
         }
     };
+
 
     /**
      * Called when the activity is first created.
@@ -49,10 +110,13 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.splash_screen);
         properties = Properties.getInstance(this);
+        httpRequestHelper = new HTTPRequestHelper(httpReqHandler);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (StringUtils.isEmpty(properties.get("username"))) {
+                if (StringUtils.isEmpty(properties.get("userId")) ||
+                        StringUtils.isEmpty(properties.get("userPassword"))
+                        ) {
                     Log.d(CLASSNAME, "user is not available.");
                     handler.sendEmptyMessage(LOGIN_NONE);
                 } else {
