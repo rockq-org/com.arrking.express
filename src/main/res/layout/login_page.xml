@@ -92,7 +92,7 @@
             android:layout_below="@+id/textView3"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="48dp"
-            android:text="Attempts Left:"
+            android:text="@string/login_attempt"
             android:visibility="invisible"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -112,7 +112,7 @@
             android:id="@+id/numberOfRemainingLoginAttemptsTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/loginBtn"
+            android:layout_alignRight="@+id/attemptsLeftTV"
             android:layout_alignTop="@+id/attemptsLeftTV"
             android:visibility="invisible" />
 
