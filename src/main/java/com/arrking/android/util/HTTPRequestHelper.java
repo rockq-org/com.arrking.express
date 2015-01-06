@@ -263,18 +263,22 @@ public class HTTPRequestHelper {
                     try {
                         result = HTTPRequestHelper.inputStreamToString(entity.getContent());
                         bundle.putString("RESPONSE", result);
+                        // set what as a succ or fail flag
                         message.setData(bundle);
+                        message.what = status.getStatusCode();
                         handler.sendMessage(message);
                     } catch (IOException e) {
                         Log.e(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG, e);
                         bundle.putString("RESPONSE", "Error - " + e.getMessage());
                         message.setData(bundle);
+                        message.what = status.getStatusCode();
                         handler.sendMessage(message);
                     }
                 } else {
                     Log.w(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG + " empty response entity, HTTP error occurred");
                     bundle.putString("RESPONSE", "Error - " + response.getStatusLine().getReasonPhrase());
                     message.setData(bundle);
+                    message.what = status.getStatusCode();
                     handler.sendMessage(message);
                 }
                 return result;
