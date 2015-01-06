@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arrking.android.component.LoadingUI;
+import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.common.ServerURLHelper;
 import com.arrking.express.model.ErrorMessage;
@@ -32,7 +33,7 @@ public class LoginPageActivity extends Activity {
     private TextView attemptsLeftTV;
     private int numberOfRemainingLoginAttempts = 3;
     private static LoadingUI loadingUI;
-
+    private static Properties properties;
 
     private Handler handler = new Handler() {
 
@@ -46,6 +47,7 @@ public class LoginPageActivity extends Activity {
                 case 200:
                     User user = gson.fromJson(resp, User.class);
                     Log.d(CLASSNAME, " get username " + user.getFirstName());
+
                     break;
                 case 401:
                     ErrorMessage err = gson.fromJson(resp, ErrorMessage.class);
@@ -64,6 +66,7 @@ public class LoginPageActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        properties = Properties.getInstance(this);
         setupVariables();
     }
 

@@ -61,6 +61,20 @@ public class Properties implements SelectionQueryBuilder.Op {
         }
     }
 
+    // save the key with value, update the key, if the key exist already.
+    public void save(String key, String value) {
+        if (hasKey(key)) {
+            try {
+                update(key, value);
+            } catch (DBException e) {
+                Log.w(CLASSNAME, "save", e);
+            }
+        } else {
+            set(key, value);
+        }
+    }
+
+    // check if the key exist
     public boolean hasKey(String key) {
         return getId(key) == -1L ? false : true;
     }
