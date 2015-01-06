@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arrking.android.util.HTTPRequestHelper;
+import com.arrking.express.common.ServerURLHelper;
 import com.arrking.express.model.ErrorMessage;
 import com.arrking.express.model.User;
 import com.google.gson.Gson;
@@ -38,7 +39,7 @@ public class LoginPageActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             String resp = (String) msg.getData().get("RESPONSE");
-            Log.d(CLASSNAME,  resp);
+            Log.d(CLASSNAME, resp);
             Gson gson = new Gson();
             switch (msg.what) {
                 case 200:
@@ -89,24 +90,20 @@ public class LoginPageActivity extends Activity {
         }
     }
 
-    private boolean validateUsernameAndPassword(String s, String s1) {
+    private boolean validateUsernameAndPassword(final String u, final String pass) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HashMap<String, String> h = new HashMap<String, String>();
-                h.put("Accept", "application/json");
-                h.put("Content-Type", "application/json");
-                httpRequestHelper.performGet("http://bizflow.mybluemix.net/service/identity/users/abby",
-                        "abby",
-                        "a12345",
-                        h);
+                httpRequestHelper.performGet(ServerURLHelper.getLoginURL(u),
+                        u,
+                        pass,
+                        ServerURLHelper.getJSONHeaders());
             }
         }).start();
         return true;
     }
 
     private void setupVariables() {
-
         username = (EditText) findViewById(R.id.usernameET);
         password = (EditText) findViewById(R.id.passwordET);
         login = (Button) findViewById(R.id.loginBtn);
