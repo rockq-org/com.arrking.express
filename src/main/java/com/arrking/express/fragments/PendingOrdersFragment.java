@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.arrking.android.component.LoadingUI;
 import com.arrking.express.MainActivity;
 import com.arrking.express.R;
+import com.arrking.express.common.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +57,11 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
     private List<ContentValues> fakeListContentValues() {
         List<ContentValues> lis = new ArrayList();
-        for(int i =0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             ContentValues cv = new ContentValues();
-            cv.put("date", "fooo");
+            cv.put(Constants.TASK_GUEST_ID, "foo@bar.com");
+            cv.put(Constants.TASK_ORDER_DATE, "2014-01-01 15:00");
+            cv.put(Constants.TASK_ORDER_LOCATION, "Hello World Cafe");
             lis.add(cv);
         }
         return lis;
@@ -119,22 +122,26 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
             if (convertView == null) {
                 convertView = this.inflater.inflate(R.layout.task_list_item, null);
                 taskViewHolder = new TaskViewHolder();
-                taskViewHolder.date = (TextView) convertView.findViewById(R.id.user_name);
+                taskViewHolder.guestId = (TextView) convertView.findViewById(R.id.guest_id);
+                taskViewHolder.date = (TextView) convertView.findViewById(R.id.order_date);
+                taskViewHolder.orderLocation = (TextView) convertView.findViewById(R.id.order_location);
                 convertView.setTag(taskViewHolder);
             } else {
                 taskViewHolder = (TaskViewHolder) convertView.getTag();
             }
             ContentValues l = (ContentValues) this.lis.get(position);
 
-            taskViewHolder.date.setText(l.getAsString("date"));
+            taskViewHolder.date.setText(l.getAsString(Constants.TASK_ORDER_DATE));
+            taskViewHolder.orderLocation.setText(l.getAsString(Constants.TASK_ORDER_LOCATION));
+            taskViewHolder.guestId.setText(l.getAsString(Constants.TASK_GUEST_ID));
             return convertView;
         }
     }
 
     private static class TaskViewHolder {
         ImageView headImage;
-        TextView orderId;
         TextView date;
         TextView guestId;
+        TextView orderLocation;
     }
 }

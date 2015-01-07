@@ -20,4 +20,10 @@ public class Constants {
     public static final String USER_URL = "userUrl";
     public static final String USER_PASSWORD = "userPassword";
 
+    // tasks list
+    public static final String TASK_GUEST_ID = "guestId";
+    public static final String TASK_ORDER_DATE = "orderDate";
+    public static final String TASK_ORDER_LOCATION = "orderLocation";
+    public static final String TASK_ORDER_ID = "orderId";
+
 }
