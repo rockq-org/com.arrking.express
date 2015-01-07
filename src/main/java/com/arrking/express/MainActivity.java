@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arrking.android.component.LoadingUI;
 import com.arrking.android.database.Properties;
 import com.arrking.android.util.ImageUtil;
 import com.arrking.express.fragments.ClosedOrdersFragment;
@@ -46,6 +48,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private BadgeView tab02Badge;
     private BadgeView tab03Badge;
     private ImageView headerMoreBtn;
+    private LoadingUI loadingUI;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,6 +162,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         @Override
         public void onPageSelected(int position) {
             resetFontColor();
+            removeLoading();
             switch (position) {
                 case 0:
                     text1.setTextColor(Color.parseColor("#008000"));
@@ -180,6 +184,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     }
 
     public void onClick(View v) {
+        // remove loading spin if it present
+        removeLoading();
         resetFontColor();
         switch (v.getId()) {
             case R.id.text1:
@@ -203,5 +209,23 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         text1.setTextColor(Color.BLACK);
         text2.setTextColor(Color.BLACK);
         text3.setTextColor(Color.BLACK);
+    }
+
+    public void addLoading() {
+        FrameLayout rootFrameLayout = (FrameLayout) this.getWindow().getDecorView();
+        if (loadingUI == null) {
+            loadingUI = new LoadingUI(this, this.getResources().getString(R.string.task_loading_tip));
+            FrameLayout.LayoutParams localLayoutParams = new FrameLayout.LayoutParams(-2, -2, 17);
+            loadingUI.setLayoutParams(localLayoutParams);
+            loadingUI.setVisiable(0);
+        }
+        rootFrameLayout.addView(loadingUI);
+    }
+
+    public void removeLoading() {
+        if (loadingUI != null) {
+            ((FrameLayout) this.getWindow().getDecorView()).removeView(loadingUI);
+            loadingUI = null;
+        }
     }
 }

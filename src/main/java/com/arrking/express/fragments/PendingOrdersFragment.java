@@ -1,5 +1,6 @@
 package com.arrking.express.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.arrking.android.component.LoadingUI;
+import com.arrking.express.MainActivity;
 import com.arrking.express.R;
 
 
@@ -18,7 +20,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
     private LinearLayout root;
     private ListView tab01ListView;
-    private LoadingUI loadingUI;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void loadData() {
-        addLoading();
+        ((MainActivity) getActivity()).addLoading();
     }
 
     private void initUI() {
@@ -46,21 +48,6 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
     }
 
-    public void addLoading() {
-        FrameLayout rootFrameLayout = (FrameLayout) getActivity().getWindow().getDecorView();
-        if (loadingUI == null) {
-            loadingUI = new LoadingUI(getActivity(), this.getResources().getString(R.string.task_loading_tip));
-            FrameLayout.LayoutParams localLayoutParams = new FrameLayout.LayoutParams(-2, -2, 17);
-            loadingUI.setLayoutParams(localLayoutParams);
-            loadingUI.setVisiable(0);
-        }
-        rootFrameLayout.addView(loadingUI);
-    }
-
-    public void removeLoading() {
-        ((FrameLayout) getActivity().getWindow().getDecorView()).removeView(loadingUI);
-        loadingUI = null;
-    }
 
     @Override
     public void onPause() {
