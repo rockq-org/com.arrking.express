@@ -1,25 +1,34 @@
 package com.arrking.express.fragments;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.arrking.android.component.LoadingUI;
 import com.arrking.express.MainActivity;
 import com.arrking.express.R;
+
+import java.util.List;
 
 
 public class PendingOrdersFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LinearLayout root;
     private ListView tab01ListView;
+    private List<ContentValues> listContentValues;
+    private BaseAdapter adapter;
 
 
     @Override
@@ -34,7 +43,22 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void loadData() {
-        ((MainActivity) getActivity()).addLoading();
+        refreshList();
+    }
+
+    private void refreshList() {
+        this.tab01ListView.setVisibility(View.VISIBLE);
+        this.listContentValues = fakeListContentValues();
+        setAdapter(this.listContentValues);
+    }
+
+    private List<ContentValues> fakeListContentValues() {
+        return null;
+    }
+
+    private void setAdapter(List<ContentValues> lis) {
+        this.adapter = new TaskListAdapter(getActivity(), lis);
+        this.tab01ListView.setAdapter(this.adapter);
     }
 
     private void initUI() {
@@ -52,5 +76,48 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+
+    private class TaskListAdapter extends BaseAdapter {
+        private final String TAG = TaskListAdapter.class.getName();
+        private LayoutInflater inflater;
+        private List<ContentValues> lis;
+
+        public TaskListAdapter(Activity ctx, List<ContentValues> lis) {
+            this.inflater = LayoutInflater.from(ctx);
+            this.lis = lis;
+        }
+
+        @Override
+        public int getCount() {
+            return this.lis.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Log.d(TAG, "================== \n getView @" + Integer.toString(position));
+            if(convertView == null){
+                convertView = this.inflater.inflate(R.layout.task_list_item)
+            }
+            return null;
+        }
+    }
+
+    private static class TaskViewHolder {
+        ImageView headImage;
+        TextView orderId;
+        TextView date;
+        TextView guestId;
     }
 }

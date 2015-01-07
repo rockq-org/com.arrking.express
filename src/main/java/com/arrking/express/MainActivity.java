@@ -162,6 +162,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         @Override
         public void onPageSelected(int position) {
             resetFontColor();
+            // remove the loading spin if it presents
             removeLoading();
             switch (position) {
                 case 0:
@@ -184,7 +185,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     }
 
     public void onClick(View v) {
-        // remove loading spin if it present
+        // remove the loading spin if it presents
         removeLoading();
         resetFontColor();
         switch (v.getId()) {
