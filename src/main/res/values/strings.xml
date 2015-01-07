@@ -21,6 +21,7 @@
     <string name="login_validation">用户名或密码不能为空</string>
     <string name="login_no_network_tip">没有连接到Internet, 应用即将退出。</string>
 
+
     <!-- Profile Page -->
     <string name="prf_email">邮箱</string>
     <string name="prf_full_name">名字</string>
@@ -30,4 +31,7 @@
     <string name="prf_status_message">状态</string>
     <string name="prf_done">完成</string>
     <string name="prf_user_id">ID</string>
+
+    <!-- tasks pages -->
+    <string name="task_loading_tip">加载数据中 ...</string>
 </resources>
