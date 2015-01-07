@@ -20,6 +20,7 @@ import com.arrking.android.component.LoadingUI;
 import com.arrking.express.MainActivity;
 import com.arrking.express.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,11 +50,18 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     private void refreshList() {
         this.tab01ListView.setVisibility(View.VISIBLE);
         this.listContentValues = fakeListContentValues();
+        ((MainActivity) getActivity()).setBadge(1, this.listContentValues.size());
         setAdapter(this.listContentValues);
     }
 
     private List<ContentValues> fakeListContentValues() {
-        return null;
+        List<ContentValues> lis = new ArrayList();
+        for(int i =0; i < 10; i++){
+            ContentValues cv = new ContentValues();
+            cv.put("date", "fooo");
+            lis.add(cv);
+        }
+        return lis;
     }
 
     private void setAdapter(List<ContentValues> lis) {
@@ -106,11 +114,20 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Log.d(TAG, "================== \n getView @" + Integer.toString(position));
-            if(convertView == null){
-                convertView = this.inflater.inflate(R.layout.task_list_item)
+            Log.d(TAG, "\n ================== \n getView @" + Integer.toString(position));
+            PendingOrdersFragment.TaskViewHolder taskViewHolder;
+            if (convertView == null) {
+                convertView = this.inflater.inflate(R.layout.task_list_item, null);
+                taskViewHolder = new TaskViewHolder();
+                taskViewHolder.date = (TextView) convertView.findViewById(R.id.user_name);
+                convertView.setTag(taskViewHolder);
+            } else {
+                taskViewHolder = (TaskViewHolder) convertView.getTag();
             }
-            return null;
+            ContentValues l = (ContentValues) this.lis.get(position);
+
+            taskViewHolder.date.setText(l.getAsString("date"));
+            return convertView;
         }
     }
 

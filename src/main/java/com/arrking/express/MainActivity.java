@@ -229,4 +229,21 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             loadingUI = null;
         }
     }
+
+    public void setBadge(int index, int value) {
+        switch (index) {
+            case 1:
+                tab01Badge.setText(Integer.toString(value));
+                break;
+            case 2:
+                tab02Badge.setText(Integer.toString(value));
+                break;
+            case 3:
+                tab03Badge.setText(Integer.toString(value));
+                break;
+            default:
+                Log.w(TAG, "can not find tab index " + index);
+                break;
+        }
+    }
 }
