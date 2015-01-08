@@ -27,6 +27,8 @@ import com.arrking.express.common.ServerURLHelper;
 import com.arrking.express.model.ActivitiTask;
 import com.arrking.express.model.ActivitiTasks;
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -41,7 +43,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
     private static final String CLASSNAME = PendingOrdersFragment.class.getName();
     private LinearLayout root;
-    private ListView tab01ListView;
+    private PullToRefreshListView tab01ListView;
     private List<ContentValues> listContentValues;
     private BaseAdapter adapter;
     private HTTPRequestHelper httpRequestHelper;
@@ -49,7 +51,13 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     private String userId;
     private String userPass;
     private DateTimeFormatter isoDateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
-
+    private PullToRefreshListView.OnRefreshListener onRefreshListener = new PullToRefreshBase.OnRefreshListener<ListView>() {
+        @Override
+        public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+            // Do work to refresh the list here.
+            refreshList();
+        }
+    };
 
     private Handler taskDataRequestHandler = new Handler() {
         @Override
@@ -65,8 +73,13 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
                     listContentValues = tasks2contentValues(activitiTasks.getData());
                     ((MainActivity) getActivity()).setBadge(1, listContentValues.size());
                     setAdapter(listContentValues);
-                    tab01ListView.setVisibility(View.VISIBLE);
-                    ((MainActivity) getActivity()).removeLoading();
+
+                    if (tab01ListView.isRefreshing()) {
+                        tab01ListView.onRefreshComplete();
+                    } else {
+                        tab01ListView.setVisibility(View.VISIBLE);
+                        ((MainActivity) getActivity()).removeLoading();
+                    }
                     break;
                 default:
                     Log.w(CLASSNAME, "taskDataRequestHandler resp:" + resp);
@@ -112,8 +125,10 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void refreshList() {
-        ((MainActivity) getActivity()).addLoading();
-        this.tab01ListView.setVisibility(View.INVISIBLE);
+        if (!tab01ListView.isRefreshing()) {
+            ((MainActivity) getActivity()).addLoading();
+            this.tab01ListView.setVisibility(View.INVISIBLE);
+        }
         requestTaskData();
     }
 
@@ -137,9 +152,10 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void initUI() {
-        this.tab01ListView = (ListView) this.root.findViewById(R.id.tab01_listView);
+        this.tab01ListView = (PullToRefreshListView) this.root.findViewById(R.id.tab01_listView);
         this.tab01ListView.setOnItemClickListener(this);
-        this.tab01ListView.setDivider(getResources().getDrawable(R.drawable.line_image));
+        ((ListView) this.tab01ListView.getRefreshableView()).setDivider(getResources().getDrawable(R.drawable.line_image));
+        this.tab01ListView.setOnRefreshListener(onRefreshListener);
     }
 
     @Override
