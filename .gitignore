@@ -10,4 +10,5 @@ gradlew.bat
 *.iml
 *.ipr
 *.iws
-libraries/SlidingMenu/build/
+libraries/SlidingMenu/build
+libraries/Android-PullToRefresh/build
