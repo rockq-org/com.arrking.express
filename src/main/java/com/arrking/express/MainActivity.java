@@ -101,7 +101,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
         mDatas = new ArrayList<Fragment>();
 //        ClosedOrdersFragment tab03 = new ClosedOrdersFragment();
-        InProgressOrdersFragment tab02 = new InProgressOrdersFragment();
+        ClosedOrdersFragment tab02 = new ClosedOrdersFragment();
         PendingOrdersFragment tab01 = new PendingOrdersFragment();
 
         mDatas.add(tab01);

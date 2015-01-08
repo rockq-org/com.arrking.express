@@ -5,8 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tab01_name">排队中</string>
-    <string name="tab02_name">处理中</string>
+    <string name="tab01_name">待处理</string>
+    <string name="tab02_name">已处理</string>
     <string name="tab03_name">已关闭</string>
     <string name="sup_choose_user_picture">选择照片作为头像</string>
 
