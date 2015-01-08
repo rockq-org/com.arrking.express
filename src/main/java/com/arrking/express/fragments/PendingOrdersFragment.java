@@ -25,6 +25,9 @@ import com.arrking.express.MainActivity;
 import com.arrking.express.R;
 import com.arrking.express.common.Constants;
 import com.arrking.express.common.ServerURLHelper;
+import com.arrking.express.model.ActivitiTask;
+import com.arrking.express.model.ActivitiTasks;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +50,18 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
         @Override
         public void handleMessage(Message msg) {
             Log.d(CLASSNAME, "get data ...");
+            Gson gson = new Gson();
             Bundle data = msg.getData();
-            Log.d(CLASSNAME, data.getString("RESPONSE"));
+            String resp = data.getString("RESPONSE");
+            switch (msg.what) {
+                case 200:
+                    ActivitiTasks activitiTasks = gson.fromJson(resp, ActivitiTasks.class);
+                    Log.d(CLASSNAME, "activitiTasks get size " + activitiTasks.getSize());
+                    break;
+                default:
+                    Log.w(CLASSNAME, "taskDataRequestHandler resp:" + resp);
+                    break;
+            }
         }
     };
 
