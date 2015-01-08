@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.arrking.android.component.LoadingUI;
 import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.MainActivity;
@@ -57,11 +56,28 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
                 case 200:
                     ActivitiTasks activitiTasks = gson.fromJson(resp, ActivitiTasks.class);
                     Log.d(CLASSNAME, "activitiTasks get size " + activitiTasks.getSize());
+                    listContentValues = tasks2contentValues(activitiTasks.getData());
+                    ((MainActivity) getActivity()).setBadge(1, listContentValues.size());
+                    setAdapter(listContentValues);
+                    tab01ListView.setVisibility(View.VISIBLE);
+                    ((MainActivity) getActivity()).removeLoading();
                     break;
                 default:
                     Log.w(CLASSNAME, "taskDataRequestHandler resp:" + resp);
                     break;
             }
+        }
+
+        private List<ContentValues> tasks2contentValues(List<ActivitiTask> data) {
+            List<ContentValues> t = new ArrayList();
+            for (int i = 0; i < data.size(); i++) {
+                ContentValues cv = new ContentValues();
+                cv.put(Constants.TASK_ID, data.get(i).getId());
+                cv.put(Constants.TASK_ORDER_DATE, data.get(i).getCreateTime());
+                cv.put(Constants.TASK_ORDER_LOCATION, "Hello World Cafe");
+                t.add(cv);
+            }
+            return t;
         }
     };
 
@@ -81,24 +97,17 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
         }
         this.root = (LinearLayout) inflater.inflate(R.layout.tab01, container, false);
         initUI();
-        loadData();
-        return this.root;
-    }
-
-    private void loadData() {
         refreshList();
+        return this.root;
     }
 
     private void refreshList() {
         ((MainActivity) getActivity()).addLoading();
-        this.tab01ListView.setVisibility(View.VISIBLE);
-        this.listContentValues = requestTaskData();
-        ((MainActivity) getActivity()).setBadge(1, this.listContentValues.size());
-        setAdapter(this.listContentValues);
+        this.tab01ListView.setVisibility(View.INVISIBLE);
+        requestTaskData();
     }
 
-    private List<ContentValues> requestTaskData() {
-
+    private void requestTaskData() {
         (new Thread(new Runnable() {
             @Override
             public void run() {
@@ -110,20 +119,6 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
                 );
             }
         })).start();
-
-        return fakeListContentValues();
-    }
-
-    private List<ContentValues> fakeListContentValues() {
-        List<ContentValues> lis = new ArrayList();
-        for (int i = 0; i < 10; i++) {
-            ContentValues cv = new ContentValues();
-            cv.put(Constants.TASK_GUEST_ID, "foo@bar.com");
-            cv.put(Constants.TASK_ORDER_DATE, "2014-01-01 15:00");
-            cv.put(Constants.TASK_ORDER_LOCATION, "Hello World Cafe");
-            lis.add(cv);
-        }
-        return lis;
     }
 
     private void setAdapter(List<ContentValues> lis) {
@@ -181,7 +176,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
             if (convertView == null) {
                 convertView = this.inflater.inflate(R.layout.task_list_item, null);
                 taskViewHolder = new TaskViewHolder();
-                taskViewHolder.guestId = (TextView) convertView.findViewById(R.id.guest_id);
+                taskViewHolder.taskId = (TextView) convertView.findViewById(R.id.task_id);
                 taskViewHolder.date = (TextView) convertView.findViewById(R.id.order_date);
                 taskViewHolder.orderLocation = (TextView) convertView.findViewById(R.id.order_location);
                 convertView.setTag(taskViewHolder);
@@ -192,7 +187,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
             taskViewHolder.date.setText(l.getAsString(Constants.TASK_ORDER_DATE));
             taskViewHolder.orderLocation.setText(l.getAsString(Constants.TASK_ORDER_LOCATION));
-            taskViewHolder.guestId.setText(l.getAsString(Constants.TASK_GUEST_ID));
+            taskViewHolder.taskId.setText(l.getAsString(Constants.TASK_ID));
             return convertView;
         }
     }
@@ -200,7 +195,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     private static class TaskViewHolder {
         ImageView headImage;
         TextView date;
-        TextView guestId;
+        TextView taskId;
         TextView orderLocation;
     }
 }

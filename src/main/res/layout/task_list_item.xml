@@ -33,7 +33,7 @@
     <TextView
         android:textSize="@dimen/list_title_size"
         android:textColor="@color/list_title_color"
-        android:id="@+id/guest_id"
+        android:id="@+id/task_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2.0dip"
@@ -50,8 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:layout_toRightOf="@id/guest_id"
-        android:layout_alignBottom="@id/guest_id"
+        android:layout_toRightOf="@id/task_id"
+        android:layout_alignBottom="@id/task_id"
         android:layout_alignWithParentIfMissing="true" />
 
     <TextView
@@ -63,8 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:layout_below="@id/guest_id"
-        android:layout_alignLeft="@id/guest_id"
+        android:layout_below="@id/task_id"
+        android:layout_alignLeft="@id/task_id"
         android:layout_alignWithParentIfMissing="true" />
 
     <!--<FrameLayout-->
