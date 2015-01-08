@@ -28,6 +28,11 @@ import com.arrking.express.model.ActivitiTask;
 import com.arrking.express.model.ActivitiTasks;
 import com.google.gson.Gson;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +48,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     private Properties properties;
     private String userId;
     private String userPass;
+    private DateTimeFormatter isoDateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
 
 
     private Handler taskDataRequestHandler = new Handler() {
@@ -69,11 +75,15 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
         }
 
         private List<ContentValues> tasks2contentValues(List<ActivitiTask> data) {
+//            DateTimeZone.setDefault(DateTimeZone.forID("Asia/Tokyo"));
+//            Log.d(CLASSNAME, DateTimeZone.getAvailableIDs());
             List<ContentValues> t = new ArrayList();
             for (int i = 0; i < data.size(); i++) {
                 ContentValues cv = new ContentValues();
                 cv.put(Constants.TASK_ID, data.get(i).getId());
-                cv.put(Constants.TASK_ORDER_DATE, data.get(i).getCreateTime());
+                DateTime dt = isoDateFormatter.parseDateTime(data.get(i).getCreateTime());
+                DateTime localTime = dt.toDateTime(DateTimeZone.forID("Asia/Chongqing"));
+                cv.put(Constants.TASK_ORDER_DATE, localTime.toString("yyyy-MM-dd HH:mm:ss"));
                 cv.put(Constants.TASK_ORDER_LOCATION, "Hello World Cafe");
                 t.add(cv);
             }
