@@ -26,4 +26,7 @@ public class Constants {
     public static final String TASK_ORDER_LOCATION = "orderLocation";
     public static final String TASK_ORDER_ID = "orderId";
 
+    // server request
+    public static final String HTTP_HEADER_APP_JSON = "application/json";
+
 }

@@ -5,6 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.arrking.express.common.*;
+import com.arrking.express.common.Constants;
+
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -12,6 +17,7 @@ import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
@@ -26,6 +32,7 @@ import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicHttpResponse;
@@ -46,6 +53,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * A Class get from Android in Action 3rd edition Source Code of Chapter 6
@@ -138,6 +147,52 @@ public class HTTPRequestHelper {
                             final Map<String, String> additionalHeaders, final Map<String, String> params) {
         performRequest(HTTPRequestHelper.MIME_FORM_ENCODED, url, user, pass, additionalHeaders, params,
                 HTTPRequestHelper.POST_TYPE);
+    }
+
+    public void performPostJSON(final String url, final String user, final String pass, final Map<String, String> additionalHeaders, final String body) {
+        Log.d(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG + " making HTTP request to url - " + url);
+
+        // add user and pass to client credentials if present
+        if ((user != null) && (pass != null)) {
+            Log.d(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG + " user and pass present, adding credentials to request");
+            client.getCredentialsProvider().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(user, pass));
+        }
+
+        // process headers using request interceptor
+        final Map<String, String> sendHeaders = new HashMap<String, String>();
+        if ((additionalHeaders != null) && (additionalHeaders.size() > 0)) {
+            sendHeaders.putAll(additionalHeaders);
+        }
+        sendHeaders.put(HTTPRequestHelper.CONTENT_TYPE, Constants.HTTP_HEADER_APP_JSON);
+
+        if (sendHeaders.size() > 0) {
+            client.addRequestInterceptor(new HttpRequestInterceptor() {
+
+                public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
+                    Log.d(CLASSTAG, "get header ..." + request.getHeaders(Constants.HTTP_HEADER_APP_JSON));
+                    for (String key : sendHeaders.keySet()) {
+                        Log.d(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG + " adding header: " + key + " | "
+                                + sendHeaders.get(key));
+                        request.addHeader(key, sendHeaders.get(key));
+                    }
+                }
+            });
+        }
+
+        Log.d(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG + " performRequest POST");
+        HttpPost method = new HttpPost(url);
+
+        // json body
+        if (!StringUtils.isEmpty(body)) {
+            try {
+                method.setEntity(new StringEntity(body));
+            } catch (UnsupportedEncodingException e) {
+                Log.e(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG, e);
+            }
+        }
+
+
+        execute(client, method);
     }
 
     /**

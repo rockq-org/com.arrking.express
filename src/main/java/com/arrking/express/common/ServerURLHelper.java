@@ -22,10 +22,31 @@ public class ServerURLHelper {
         }
     }
 
-    public static HashMap<String, String> getJSONHeaders(){
+    public static HashMap<String, String> getJSONHeaders() {
         HashMap<String, String> h = new HashMap<String, String>();
         h.put("Accept", "application/json");
         h.put("Content-Type", "application/json");
         return h;
+    }
+
+    public static String queryCashierTasksURL() {
+        if (Constants.serverPort > 0) {
+            return String.format("%s://%s:%d/%s/query/tasks", Constants.serverProtocol,
+                    Constants.serverHost,
+                    Constants.serverPort,
+                    Constants.serverRestRootPath);
+        } else {
+            return String.format("%s://%s/%s/query/tasks", Constants.serverProtocol,
+                    Constants.serverHost,
+                    Constants.serverRestRootPath);
+        }
+    }
+
+    public static String getQueryCashierTasksBody() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("{");
+        sb.append("\"name\": \"Process Order by Cashier\"");
+        sb.append("}");
+        return sb.toString();
     }
 }

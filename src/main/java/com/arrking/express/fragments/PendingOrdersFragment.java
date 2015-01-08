@@ -3,6 +3,8 @@ package com.arrking.express.fragments;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.arrking.android.component.LoadingUI;
+import com.arrking.android.database.Properties;
+import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.MainActivity;
 import com.arrking.express.R;
 import com.arrking.express.common.Constants;
+import com.arrking.express.common.ServerURLHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +32,34 @@ import java.util.List;
 
 public class PendingOrdersFragment extends Fragment implements AdapterView.OnItemClickListener {
 
+    private static final String CLASSNAME = PendingOrdersFragment.class.getName();
     private LinearLayout root;
     private ListView tab01ListView;
     private List<ContentValues> listContentValues;
     private BaseAdapter adapter;
+    private HTTPRequestHelper httpRequestHelper;
+    private Properties properties;
+    private String userId;
+    private String userPass;
 
+
+    private Handler taskDataRequestHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d(CLASSNAME, "get data ...");
+            Bundle data = msg.getData();
+            Log.d(CLASSNAME, data.getString("RESPONSE"));
+        }
+    };
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        httpRequestHelper = new HTTPRequestHelper(taskDataRequestHandler);
+        properties = Properties.getInstance(getActivity());
+        userId = properties.get(Constants.USER_ID);
+        userPass = properties.get(Constants.USER_PASSWORD);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,10 +77,28 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void refreshList() {
+        ((MainActivity) getActivity()).addLoading();
         this.tab01ListView.setVisibility(View.VISIBLE);
-        this.listContentValues = fakeListContentValues();
+        this.listContentValues = requestTaskData();
         ((MainActivity) getActivity()).setBadge(1, this.listContentValues.size());
         setAdapter(this.listContentValues);
+    }
+
+    private List<ContentValues> requestTaskData() {
+
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                httpRequestHelper.performPostJSON(ServerURLHelper.queryCashierTasksURL(),
+                        userId,
+                        userPass,
+                        ServerURLHelper.getJSONHeaders(),
+                        ServerURLHelper.getQueryCashierTasksBody()
+                );
+            }
+        })).start();
+
+        return fakeListContentValues();
     }
 
     private List<ContentValues> fakeListContentValues() {
