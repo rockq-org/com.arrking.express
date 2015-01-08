@@ -37,24 +37,25 @@
                 android:textSize="15sp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_tab3"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/tab03_name"
-                android:id="@+id/text3"
-                android:textSize="15sp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_tab3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:text="@string/tab03_name"-->
+                <!--android:id="@+id/text3"-->
+                <!--android:textSize="15sp"-->
+                <!--android:layout_height="wrap_content"/>-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 
+    <!-- full width: 360dp; three tabs: layout_width:120dp; two tabs: 160dp;-->
     <ImageView
-        android:layout_width="120dp"
+        android:layout_width="160dp"
         android:id="@+id/iv_line"
         android:background="@drawable/tabline"
         android:src="@drawable/tabline"

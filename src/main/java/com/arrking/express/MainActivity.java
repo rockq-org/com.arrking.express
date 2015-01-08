@@ -38,15 +38,16 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private ViewPager mViewPager;
     private List<Fragment> mDatas;
     private FragmentPagerAdapter mAdapter;
-    private TextView text1, text2, text3;
+    //    private TextView text1, text2, text3;
+    private TextView text1, text2;
     private ImageView mLine;
     private int ScreenWidth;
     private LinearLayout mTab01LinerLayout;
     private LinearLayout mTab02LinerLayout;
-    private LinearLayout mTab03LinerLayout;
+    //    private LinearLayout mTab03LinerLayout;
     private BadgeView tab01Badge;
     private BadgeView tab02Badge;
-    private BadgeView tab03Badge;
+    //    private BadgeView tab03Badge;
     private ImageView headerMoreBtn;
     private LoadingUI loadingUI;
 
@@ -65,7 +66,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         Display display = getWindow().getWindowManager().getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         display.getMetrics(dm);
-        ScreenWidth = (int) (dm.widthPixels / 3);
+        ScreenWidth = (int) (dm.widthPixels / 2);
 
         // tab 1 in waiting orders
         // tab 2 in progress orders
@@ -74,16 +75,16 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         mViewPager = (ViewPager) findViewById(R.id.vp_main);
         text1 = (TextView) findViewById(R.id.text1);
         text2 = (TextView) findViewById(R.id.text2);
-        text3 = (TextView) findViewById(R.id.text3);
+//        text3 = (TextView) findViewById(R.id.text3);
         mLine = (ImageView) findViewById(R.id.iv_line);
 
         mTab01LinerLayout = (LinearLayout) findViewById(R.id.ll_tab1);
         mTab02LinerLayout = (LinearLayout) findViewById(R.id.ll_tab2);
-        mTab03LinerLayout = (LinearLayout) findViewById(R.id.ll_tab3);
+//        mTab03LinerLayout = (LinearLayout) findViewById(R.id.ll_tab3);
 
         text1.setOnClickListener(this);
         text2.setOnClickListener(this);
-        text3.setOnClickListener(this);
+//        text3.setOnClickListener(this);
 
         // set badges
         tab01Badge = new BadgeView(this);
@@ -92,20 +93,20 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         tab02Badge = new BadgeView(this);
         mTab02LinerLayout.addView(tab02Badge);
 
-        tab03Badge = new BadgeView(this);
-        mTab03LinerLayout.addView(tab03Badge);
+//        tab03Badge = new BadgeView(this);
+//        mTab03LinerLayout.addView(tab03Badge);
 
 
 //        tab01Badge.setBadgeCount(99);
 
         mDatas = new ArrayList<Fragment>();
-        ClosedOrdersFragment tab03 = new ClosedOrdersFragment();
+//        ClosedOrdersFragment tab03 = new ClosedOrdersFragment();
         InProgressOrdersFragment tab02 = new InProgressOrdersFragment();
         PendingOrdersFragment tab01 = new PendingOrdersFragment();
 
         mDatas.add(tab01);
         mDatas.add(tab02);
-        mDatas.add(tab03);
+//        mDatas.add(tab03);
 
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -171,9 +172,9 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 case 1:
                     text2.setTextColor(Color.parseColor("#008000"));
                     break;
-                case 2:
-                    text3.setTextColor(Color.parseColor("#008000"));
-                    break;
+//                case 2:
+//                    text3.setTextColor(Color.parseColor("#008000"));
+//                    break;
             }
 
         }
@@ -197,10 +198,10 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 mViewPager.setCurrentItem(1);
                 text2.setTextColor(Color.parseColor("#008000"));
                 break;
-            case R.id.text3:
-                mViewPager.setCurrentItem(2);
-                text3.setTextColor(Color.parseColor("#008000"));
-                break;
+//            case R.id.text3:
+//                mViewPager.setCurrentItem(2);
+//                text3.setTextColor(Color.parseColor("#008000"));
+//                break;
         }
 
 
@@ -209,7 +210,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     void resetFontColor() {
         text1.setTextColor(Color.BLACK);
         text2.setTextColor(Color.BLACK);
-        text3.setTextColor(Color.BLACK);
+//        text3.setTextColor(Color.BLACK);
     }
 
     public void addLoading() {
@@ -238,9 +239,9 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             case 2:
                 tab02Badge.setText(Integer.toString(value));
                 break;
-            case 3:
-                tab03Badge.setText(Integer.toString(value));
-                break;
+//            case 3:
+//                tab03Badge.setText(Integer.toString(value));
+//                break;
             default:
                 Log.w(TAG, "can not find tab index " + index);
                 break;
