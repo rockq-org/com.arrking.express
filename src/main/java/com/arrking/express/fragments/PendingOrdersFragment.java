@@ -104,6 +104,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
         }
     };
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,7 +161,9 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        ContentValues v = this.listContentValues.get((int) id);
+        Log.d(CLASSNAME, "clicked task " + v.getAsString(Constants.TASK_ID));
+        // TODO open a detail page of this task
     }
 
 
@@ -182,46 +185,57 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
 
         @Override
         public int getCount() {
-            return this.lis.size();
+            return lis.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            Log.d(TAG, "get item ... " + position);
+            return lis.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Log.d(TAG, "\n ================== \n getView @" + Integer.toString(position));
-            PendingOrdersFragment.TaskViewHolder taskViewHolder;
+            TaskViewHolder taskViewHolder;
             if (convertView == null) {
                 convertView = this.inflater.inflate(R.layout.task_list_item, null);
                 taskViewHolder = new TaskViewHolder();
                 taskViewHolder.taskId = (TextView) convertView.findViewById(R.id.task_id);
                 taskViewHolder.date = (TextView) convertView.findViewById(R.id.order_date);
                 taskViewHolder.orderLocation = (TextView) convertView.findViewById(R.id.order_location);
-                convertView.setTag(taskViewHolder);
+                taskViewHolder.headImage = (ImageView) convertView.findViewById(R.id.head_icon);
             } else {
                 taskViewHolder = (TaskViewHolder) convertView.getTag();
             }
-            ContentValues l = (ContentValues) this.lis.get(position);
+            final ContentValues l = (ContentValues) lis.get(position);
 
             taskViewHolder.date.setText(l.getAsString(Constants.TASK_ORDER_DATE));
             taskViewHolder.orderLocation.setText(l.getAsString(Constants.TASK_ORDER_LOCATION));
             taskViewHolder.taskId.setText(l.getAsString(Constants.TASK_ID));
+            // event listener for image
+//            taskViewHolder.headImage.setClickable(true);
+//            taskViewHolder.headImage.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d(TAG, "clicked ... " + l.getAsString(Constants.TASK_ID));
+//                }
+//            });
+
+            convertView.setTag(taskViewHolder);
             return convertView;
         }
     }
 
-    private static class TaskViewHolder {
-        ImageView headImage;
-        TextView date;
-        TextView taskId;
-        TextView orderLocation;
+    public final class TaskViewHolder {
+        public ImageView headImage;
+        public TextView date;
+        public TextView taskId;
+        public TextView orderLocation;
     }
 }
