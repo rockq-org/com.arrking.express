@@ -2,6 +2,7 @@ package com.arrking.express.fragments;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.MainActivity;
+import com.arrking.express.OrderDetailActivity;
 import com.arrking.express.R;
 import com.arrking.express.common.Constants;
 import com.arrking.express.common.ServerURLHelper;
@@ -162,8 +164,10 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ContentValues v = this.listContentValues.get((int) id);
-        Log.d(CLASSNAME, "clicked task " + v.getAsString(Constants.TASK_ID));
-        // TODO open a detail page of this task
+
+        Intent intent=new Intent(getActivity(), OrderDetailActivity.class);
+        intent.putExtra("id",v.getAsString(Constants.TASK_ID));
+        startActivity(intent);
     }
 
 

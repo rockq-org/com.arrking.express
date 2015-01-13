@@ -49,4 +49,20 @@ public class ServerURLHelper {
         sb.append("}");
         return sb.toString();
     }
+
+
+    public static String getQueryOrderDetailURL(String id){
+        if (Constants.serverPort > 0) {
+            return String.format("%s://%s:%d/%s/runtime/tasks/%s/variables/orderDetail?scope=global", Constants.serverProtocol,
+                    Constants.serverHost,
+                    Constants.serverPort,
+                    Constants.serverRestRootPath,
+                    id);
+        } else {
+            return String.format("%s://%s/%s/runtime/tasks/%s/variables/orderDetail?scope=global", Constants.serverProtocol,
+                    Constants.serverHost,
+                    Constants.serverRestRootPath,
+                    id);
+        }
+    }
 }

@@ -21,7 +21,6 @@
     <string name="login_validation">用户名或密码不能为空</string>
     <string name="login_no_network_tip">没有连接到Internet, 应用即将退出。</string>
 
-
     <!-- Profile Page -->
     <string name="prf_email">邮箱</string>
     <string name="prf_full_name">名字</string>
@@ -37,5 +36,6 @@
     <string name="pull_to_refresh_release_label">释放刷新 ...</string>
     <string name="pull_to_refresh_pull_label">下拉刷新 ...</string>
     <string name="pull_to_refresh_refreshing_label">@string/task_loading_tip</string>
+    <string name="title_activity_order_detail">OrderDetailActivity</string>
 
 </resources>
