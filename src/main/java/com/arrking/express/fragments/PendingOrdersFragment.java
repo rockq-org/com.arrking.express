@@ -68,6 +68,7 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
             Gson gson = new Gson();
             Bundle data = msg.getData();
             String resp = data.getString("RESPONSE");
+            Log.d(CLASSNAME, " resp:"+resp);
             switch (msg.what) {
                 case 200:
                     ActivitiTasks activitiTasks = gson.fromJson(resp, ActivitiTasks.class);

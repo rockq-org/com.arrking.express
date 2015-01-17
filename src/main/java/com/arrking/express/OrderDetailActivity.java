@@ -13,7 +13,11 @@ import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.common.Constants;
 import com.arrking.express.common.ServerURLHelper;
+import com.arrking.express.model.Order;
+import com.arrking.express.model.User;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 
 public class OrderDetailActivity extends Activity {
@@ -31,10 +35,19 @@ public class OrderDetailActivity extends Activity {
             Gson gson = new Gson();
             Bundle data = msg.getData();
             String resp = data.getString("RESPONSE");
-            Log.d(TAG ,"resp:"+resp);
+            JSONObject resp_json=null;
+
             switch (msg.what) {
                 case 200:
-
+                    try {
+                        resp_json=new JSONObject(resp);
+                        Log.d(TAG,resp_json.toString());
+                        Log.d(TAG,resp_json.getJSONObject("value").toString()+"");
+                        Order order = gson.fromJson(resp_json.getJSONObject("value").toString(), Order.class);
+                    }catch (Exception e){
+                        Log.d(TAG,"exception");
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     break;
@@ -77,11 +90,10 @@ public class OrderDetailActivity extends Activity {
             public void run() {
 
                 Log.i(TAG, ServerURLHelper.getQueryOrderDetailURL(id));
-                httpRequestHelper.performPostJSON(ServerURLHelper.getQueryOrderDetailURL(id),
+                httpRequestHelper.performGet(ServerURLHelper.getQueryOrderDetailURL(id),
                         userId,
                         userPass,
-                        ServerURLHelper.getJSONHeaders(),
-                        ServerURLHelper.getQueryCashierTasksBody()
+                        ServerURLHelper.getJSONHeaders()
                 );
             }
         })).start();
