@@ -12,3 +12,4 @@ gradlew.bat
 *.iws
 libraries/SlidingMenu/build
 libraries/Android-PullToRefresh/build
+local.properties
