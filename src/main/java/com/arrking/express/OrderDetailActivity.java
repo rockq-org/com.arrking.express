@@ -1,14 +1,10 @@
 package com.arrking.express;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,19 +13,12 @@ import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.common.Constants;
 import com.arrking.express.common.ServerURLHelper;
-import com.arrking.express.model.ActivitiTask;
-import com.arrking.express.model.ActivitiTasks;
 import com.google.gson.Gson;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class OrderDetailActivity extends Activity {
 
+    private static final String TAG = OrderDetailActivity.class.getName();
     private Button mBtnClose;
     private HTTPRequestHelper httpRequestHelper;
     private Properties properties;
@@ -42,7 +31,7 @@ public class OrderDetailActivity extends Activity {
             Gson gson = new Gson();
             Bundle data = msg.getData();
             String resp = data.getString("RESPONSE");
-            Log.d("fangjie","resp:"+resp);
+            Log.d(TAG ,"resp:"+resp);
             switch (msg.what) {
                 case 200:
 
@@ -87,7 +76,7 @@ public class OrderDetailActivity extends Activity {
             @Override
             public void run() {
 
-                Log.i("fangjie",ServerURLHelper.getQueryOrderDetailURL(id));
+                Log.i(TAG, ServerURLHelper.getQueryOrderDetailURL(id));
                 httpRequestHelper.performPostJSON(ServerURLHelper.getQueryOrderDetailURL(id),
                         userId,
                         userPass,
