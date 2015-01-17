@@ -5,56 +5,57 @@ import  java.util.List;
  */
 public class Order {
 
-    private long _id;
-    private long _rev;
-    private int state;
-    private double billing;
-    private double discount;
+    private String _id;
+    private String _rev;
+    private int status;
+    private int billing;
+    private int discount;
     private List<Food> foods;
-    private long guestId;
+    private String guestId;
     private String guestPassport;
-    private double seatLng;
-    private double seatLat;
-    private boolean rejected;
-    private long alipayOrderId;
+    private String seatLng;
+    private String seatLat;
+    private String processDefId;
+    private String rejectedReason;
+    private String alipayOrderId;
 
-    public long get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(long _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
-    public long get_rev() {
+    public String get_rev() {
         return _rev;
     }
 
-    public void set_rev(long _rev) {
+    public void set_rev(String _rev) {
         this._rev = _rev;
     }
 
-    public int getState() {
-        return state;
+    public int getStatus() {
+        return status;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public double getBilling() {
+    public int getBilling() {
         return billing;
     }
 
-    public void setBilling(double billing) {
+    public void setBilling(int billing) {
         this.billing = billing;
     }
 
-    public double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
@@ -66,11 +67,11 @@ public class Order {
         this.foods = foods;
     }
 
-    public long getGuestId() {
+    public String getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(long guestId) {
+    public void setGuestId(String guestId) {
         this.guestId = guestId;
     }
 
@@ -82,35 +83,43 @@ public class Order {
         this.guestPassport = guestPassport;
     }
 
-    public double getSeatLng() {
+    public String getSeatLng() {
         return seatLng;
     }
 
-    public void setSeatLng(double seatLng) {
+    public void setSeatLng(String seatLng) {
         this.seatLng = seatLng;
     }
 
-    public double getSeatLat() {
+    public String getSeatLat() {
         return seatLat;
     }
 
-    public void setSeatLat(double seatLat) {
+    public void setSeatLat(String seatLat) {
         this.seatLat = seatLat;
     }
 
-    public boolean isRejected() {
-        return rejected;
+    public String getProcessDefId() {
+        return processDefId;
     }
 
-    public void setRejected(boolean rejected) {
-        this.rejected = rejected;
+    public void setProcessDefId(String processDefId) {
+        this.processDefId = processDefId;
     }
 
-    public long getAlipayOrderId() {
+    public String getRejectedReason() {
+        return rejectedReason;
+    }
+
+    public void setRejectedReason(String rejectedReason) {
+        this.rejectedReason = rejectedReason;
+    }
+
+    public String getAlipayOrderId() {
         return alipayOrderId;
     }
 
-    public void setAlipayOrderId(long alipayOrderId) {
+    public void setAlipayOrderId(String alipayOrderId) {
         this.alipayOrderId = alipayOrderId;
     }
 }

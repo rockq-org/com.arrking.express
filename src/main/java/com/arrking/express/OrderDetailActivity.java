@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
@@ -29,6 +31,11 @@ public class OrderDetailActivity extends Activity {
     private String userId;
     private String userPass;
 
+    private TextView mTvTitle;
+    private TextView mTvOrder;
+    private TextView mTvUser;
+    private TextView mTvFood;
+
     private Handler taskDataRequestHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -41,9 +48,13 @@ public class OrderDetailActivity extends Activity {
                 case 200:
                     try {
                         resp_json=new JSONObject(resp);
-                        Log.d(TAG,resp_json.toString());
-                        Log.d(TAG,resp_json.getJSONObject("value").toString()+"");
-                        Order order = gson.fromJson(resp_json.getJSONObject("value").toString(), Order.class);
+                        resp_json=new JSONObject(resp_json.getString("value"));
+                        Order order = gson.fromJson(resp_json.toString(), Order.class);
+                        mTvOrder.setText("订单id:"+order.get_id());
+                        mTvFood.setText("食物:"+order.getFoods().get(0).getName()+"-数量："+order.getFoods().get(0).getCount());
+                        mTvTitle.setText(order.get_id());
+                        mTvUser.setText("消费者:"+order.getGuestId());
+
                     }catch (Exception e){
                         Log.d(TAG,"exception");
                         e.printStackTrace();
@@ -70,6 +81,11 @@ public class OrderDetailActivity extends Activity {
         userPass = properties.get(Constants.USER_PASSWORD);
 
         requestTaskData(id);
+
+        mTvOrder=(TextView)findViewById(R.id.tv_orderdetail_name);
+        mTvTitle=(TextView)findViewById(R.id.tv_titlebar);
+        mTvUser=(TextView)findViewById(R.id.tv_orderdetail_user);
+        mTvFood=(TextView)findViewById(R.id.tv_orderdetail_food);
 
         mBtnClose=(Button)findViewById(R.id.btn_closeorder);
         mBtnClose.setOnClickListener(new View.OnClickListener() {
