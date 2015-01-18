@@ -5,14 +5,28 @@
     <include
         android:id="@+id/top"
         layout="@layout/titlebar"/>
-    <RelativeLayout
+    <LinearLayout
         android:layout_below="@id/top"
         android:id="@+id/rl_order_content"
-        android:text="@string/hello_world"
         android:layout_width="wrap_content"
+        android:orientation="vertical"
         android:layout_height="wrap_content" >
-
-    </RelativeLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_orderdetail_name"
+            />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_orderdetail_user"
+            />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_orderdetail_food"
+            />
+    </LinearLayout>
     <Button
         android:layout_below="@id/rl_order_content"
         android:id="@+id/btn_closeorder"

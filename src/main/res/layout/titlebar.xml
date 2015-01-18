@@ -17,12 +17,11 @@
             android:src="@drawable/back"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/tv_orderdetail"
+        android:id="@+id/tv_titlebar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="#ffffff"
-        android:text="任务112"
         android:textSize="18dp" />
 
 </RelativeLayout>
