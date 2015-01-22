@@ -20,7 +20,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            db.execSQL(DbConstants.CREATE_TABLE_SQL.toString());
+            db.execSQL(DbConstants.CREATE_ORDER_TABLE_SQL);
+            db.execSQL(DbConstants.CREATE_FOOD_TABLE_SQL);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

@@ -16,7 +16,7 @@ public class Order {
     private String seatLng;
     private String seatLat;
     private String processDefId;
-    private String rejectedReason;
+    private boolean rejected;
     private String alipayOrderId;
 
     public String get_id() {
@@ -107,19 +107,19 @@ public class Order {
         this.processDefId = processDefId;
     }
 
-    public String getRejectedReason() {
-        return rejectedReason;
-    }
-
-    public void setRejectedReason(String rejectedReason) {
-        this.rejectedReason = rejectedReason;
-    }
-
     public String getAlipayOrderId() {
         return alipayOrderId;
     }
 
     public void setAlipayOrderId(String alipayOrderId) {
         this.alipayOrderId = alipayOrderId;
+    }
+
+    public boolean isRejected() {
+        return rejected;
+    }
+
+    public void setRejected(boolean rejected) {
+        this.rejected = rejected;
     }
 }

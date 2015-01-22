@@ -1,10 +1,12 @@
 package com.arrking.android.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.arrking.express.model.DBOrder;
+import com.arrking.express.model.Food;
 import com.arrking.express.model.Order;
 
 import java.util.ArrayList;
@@ -23,14 +25,38 @@ public class OrderSQLUtils{
         db = dbHelper.getWritableDatabase();
     }
 
-    public void insert(DBOrder dborder){
+    public void insert(String taskId,Order order){
         db.beginTransaction();
         try {
-            db.execSQL("INSERT INTO order VALUES(?, ?)", new Object[]{dborder.getId(),dborder.getDate()});
+            ContentValues values = new ContentValues();
+            values.put("taskId", taskId);
+            values.put("_id", order.get_id());
+            values.put("_rev",order.get_rev());
+            values.put("billing", order.getBilling());
+            values.put("status",order.getStatus());
+            values.put("discount", order.getDiscount());
+            values.put("guestId", order.getGuestId());
+            values.put("guestPassport",order.getGuestPassport());
+            values.put("seatLng", order.getSeatLng());
+            values.put("seatLat",order.getSeatLat());
+            values.put("processDefId",order.getProcessDefId());
+            values.put("rejected", order.isRejected());
+            values.put("alipayOrderId",order.getAlipayOrderId());
+            db.insertOrThrow("OVERORDER", null, values);
             db.setTransactionSuccessful();
+            for(int i=0;i<order.getFoods().size();i++){
+                Food f=order.getFoods().get(i);
+                ContentValues value = new ContentValues();
+                value.put("taskId", taskId);
+                value.put("name", f.getName());
+                value.put("price",f.getPrice());
+                value.put("count",f.getCount());
+                db.insertOrThrow("FOOD", null, value);
+            }
         } finally {
             db.endTransaction();
         }
+
     }
 
     public List<DBOrder> query(){
