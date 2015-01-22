@@ -101,6 +101,7 @@ public class OrderDetailActivity extends Activity {
             @Override
             public void onClick(View v) {
             addLoading();
+            requestDoneTask(taskId);
             new OrderSQLUtils(OrderDetailActivity.this).insert(taskId, mOrder);
             removeLoading();
             }
@@ -123,6 +124,20 @@ public class OrderDetailActivity extends Activity {
         })).start();
         addLoading();
 
+    }
+
+    public void requestDoneTask(final String id){
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                httpRequestHelper.performPostJSON(ServerURLHelper.getDoneTaskURL(id),
+                        userId,
+                        userPass,
+                        ServerURLHelper.getJSONHeaders(),ServerURLHelper.getDoneTaskBody()
+                );
+            }
+        }.start();
     }
     public void addLoading() {
         FrameLayout rootFrameLayout = (FrameLayout) this.getWindow().getDecorView();

@@ -50,6 +50,28 @@ public class ServerURLHelper {
         return sb.toString();
     }
 
+    public static String getDoneTaskBody() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("{");
+        sb.append("\"action\": \"complete\"");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    public static String getDoneTaskURL(String id){
+        if (Constants.serverPort > 0) {
+            return String.format("%s://%s:%d/%s/runtime/tasks/%s", Constants.serverProtocol,
+                    Constants.serverHost,
+                    Constants.serverPort,
+                    Constants.serverRestRootPath,
+                    id);
+        } else {
+            return String.format("%s://%s/%s/runtime/tasks/%s/", Constants.serverProtocol,
+                    Constants.serverHost,
+                    Constants.serverRestRootPath,
+                    id);
+        }
+    }
 
     public static String getQueryOrderDetailURL(String id){
         if (Constants.serverPort > 0) {
