@@ -66,7 +66,7 @@ public class ServerURLHelper {
                     Constants.serverRestRootPath,
                     id);
         } else {
-            return String.format("%s://%s/%s/runtime/tasks/%s/", Constants.serverProtocol,
+            return String.format("%s://%s/%s/runtime/tasks/%s", Constants.serverProtocol,
                     Constants.serverHost,
                     Constants.serverRestRootPath,
                     id);

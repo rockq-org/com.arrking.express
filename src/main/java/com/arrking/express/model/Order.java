@@ -1,9 +1,14 @@
 package com.arrking.express.model;
+import java.util.Date;
 import  java.util.List;
 /**
  * Created by Jim on 2015/1/17.
  */
 public class Order {
+
+    private int taskId;
+    private Date doneTime;
+    private String location;
 
     private String _id;
     private String _rev;
@@ -18,6 +23,30 @@ public class Order {
     private String processDefId;
     private boolean rejected;
     private String alipayOrderId;
+
+    public Date getDoneTime() {
+        return doneTime;
+    }
+
+    public void setDoneTime(Date doneTime) {
+        this.doneTime = doneTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
 
     public String get_id() {
         return _id;

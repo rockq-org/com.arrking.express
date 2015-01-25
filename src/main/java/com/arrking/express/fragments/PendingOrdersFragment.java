@@ -165,9 +165,9 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ContentValues v = this.listContentValues.get((int) id);
-
         Intent intent=new Intent(getActivity(), OrderDetailActivity.class);
         intent.putExtra("id",v.getAsString(Constants.TASK_ID));
+        intent.putExtra("location",v.getAsString(Constants.TASK_ORDER_LOCATION));
         startActivity(intent);
     }
 

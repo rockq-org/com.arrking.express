@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@drawable/list_item_selector"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/close_head_icon"
+            android:paddingLeft="3.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.0dip"
+            android:src="@drawable/default_order_icon" />
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/list_item_head_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.0dip"
+            android:src="@drawable/head_icon_shade" />
+    </FrameLayout>
+
+    <TextView
+        android:textSize="@dimen/list_title_size"
+        android:textColor="@color/list_title_color"
+        android:id="@+id/closetask_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginTop="10.0dip"
+        android:layout_marginRight="5.0dip"
+        android:singleLine="true"
+        android:layout_toRightOf="@id/imageView"
+        android:layout_alignTop="@id/imageView" />
+
+    <TextView
+        android:textSize="@dimen/list_content_size"
+        android:textColor="@color/list_content_color"
+        android:id="@+id/closeorder_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:layout_toRightOf="@id/closetask_id"
+        android:layout_alignBottom="@id/closetask_id"
+        android:layout_alignWithParentIfMissing="true" />
+
+    <TextView
+        android:textSize="@dimen/list_content_size"
+        android:textColor="@color/list_content_color"
+        android:id="@+id/closeorder_location"
+        android:paddingTop="1.6999817dip"
+        android:paddingBottom="8.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:layout_below="@id/closetask_id"
+        android:layout_alignLeft="@id/closetask_id"
+        android:layout_alignWithParentIfMissing="true" />
+
+</RelativeLayout>

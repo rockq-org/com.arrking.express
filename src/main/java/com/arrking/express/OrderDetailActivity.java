@@ -40,7 +40,7 @@ public class OrderDetailActivity extends Activity {
     private TextView mTvFood;
 
     private Order mOrder;
-    private String taskId;
+    private String taskId,location;
 
     private LoadingUI loadingUI;
 
@@ -76,6 +76,21 @@ public class OrderDetailActivity extends Activity {
 
     };
 
+    private Handler taskdoneRequestHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 200:
+                    removeLoading();
+                    finish();
+                    break;
+                default:
+                    break;
+            }
+        }
+    } ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +98,7 @@ public class OrderDetailActivity extends Activity {
         setContentView(R.layout.activity_order_detail);
 
         taskId= getIntent().getStringExtra("id");
+        location=getIntent().getStringExtra("location");
 
         httpRequestHelper = new HTTPRequestHelper(taskDataRequestHandler);
         properties = Properties.getInstance(this);
@@ -102,19 +118,21 @@ public class OrderDetailActivity extends Activity {
             public void onClick(View v) {
             addLoading();
             requestDoneTask(taskId);
-            new OrderSQLUtils(OrderDetailActivity.this).insert(taskId, mOrder);
-            removeLoading();
+
+            new OrderSQLUtils(OrderDetailActivity.this).insert(taskId, location,mOrder);
+
             }
         });
     }
 
-
+    /**
+     * 获取task 详情
+     * @param id
+     */
     private void requestTaskData(final String id) {
         (new Thread(new Runnable() {
             @Override
             public void run() {
-
-                Log.i(TAG, ServerURLHelper.getQueryOrderDetailURL(id));
                 httpRequestHelper.performGet(ServerURLHelper.getQueryOrderDetailURL(id),
                         userId,
                         userPass,
@@ -126,11 +144,16 @@ public class OrderDetailActivity extends Activity {
 
     }
 
+    /**
+     *关闭task的请求
+     * @param id
+     */
     public void requestDoneTask(final String id){
         new Thread(){
             @Override
             public void run() {
                 super.run();
+                httpRequestHelper = new HTTPRequestHelper(taskdoneRequestHandler);
                 httpRequestHelper.performPostJSON(ServerURLHelper.getDoneTaskURL(id),
                         userId,
                         userPass,
