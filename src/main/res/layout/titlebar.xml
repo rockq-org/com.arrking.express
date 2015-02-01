@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="18dp"
+    android:layout_height="56dp"
     android:paddingRight="18dp"
-    android:background="@drawable/top1_bg">
-    <LinearLayout
+    android:paddingLeft="18dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@color/order_actionbar">
+    <RelativeLayout
+        android:id="@+id/rl_back"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:gravity="center"
         >
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:src="@drawable/back"/>
-    </LinearLayout>
+    </RelativeLayout>
     <TextView
+        android:layout_marginLeft="20dp"
         android:id="@+id/tv_titlebar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="#ffffff"
+        android:text="112"
         android:textSize="18dp" />
 
-</RelativeLayout>
+</LinearLayout>

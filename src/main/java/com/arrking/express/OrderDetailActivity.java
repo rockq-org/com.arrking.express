@@ -1,15 +1,22 @@
 package com.arrking.express;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.arrking.android.component.LoadingUI;
@@ -18,26 +25,33 @@ import com.arrking.android.database.Properties;
 import com.arrking.android.util.HTTPRequestHelper;
 import com.arrking.express.common.Constants;
 import com.arrking.express.common.ServerURLHelper;
+import com.arrking.express.model.Food;
 import com.arrking.express.model.Order;
 import com.arrking.express.model.User;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 
 public class OrderDetailActivity extends Activity {
 
     private static final String TAG = OrderDetailActivity.class.getName();
-    private Button mBtnClose;
     private HTTPRequestHelper httpRequestHelper;
     private Properties properties;
     private String userId;
     private String userPass;
 
-    private TextView mTvTitle;
-    private TextView mTvOrder;
-    private TextView mTvUser;
-    private TextView mTvFood;
+    private TextView mTvABTitle;
+    private TextView mTvGuestId;
+    private TextView mTvAddress;
+    private TextView mTvPrice,mTvPriceNow;
+    private TextView mTvDiscount;
+    private ListView mLvFood;
+    private FoodListAdapter mAdapter;
+    private ImageView mIvClose;
+    private RelativeLayout mRlBack;
 
     private Order mOrder;
     private String taskId,location;
@@ -51,7 +65,7 @@ public class OrderDetailActivity extends Activity {
             Bundle data = msg.getData();
             String resp = data.getString("RESPONSE");
             JSONObject resp_json=null;
-
+            Log.i("fangjie","resp:"+resp);
             switch (msg.what) {
                 case 200:
                     removeLoading();
@@ -59,10 +73,12 @@ public class OrderDetailActivity extends Activity {
                         resp_json=new JSONObject(resp);
                         resp_json=new JSONObject(resp_json.getString("value"));
                         mOrder = gson.fromJson(resp_json.toString(), Order.class);
-                        mTvOrder.setText("订单id:"+mOrder.get_id());
-                        mTvFood.setText("食物:"+mOrder.getFoods().get(0).getName()+"-数量："+mOrder.getFoods().get(0).getCount());
-                        mTvTitle.setText(mOrder.get_id());
-                        mTvUser.setText("消费者:"+mOrder.getGuestId());
+                        mTvABTitle.setText(taskId);
+                        mTvAddress.setText(mOrder.getLocation());
+                        mTvDiscount.setText(mOrder.getDiscount()+" off");
+                        mTvGuestId.setText(mOrder.getGuestId());
+                        mAdapter=new FoodListAdapter(OrderDetailActivity.this,mOrder.getFoods());
+                        mLvFood.setAdapter(mAdapter);
 
                     }catch (Exception e){
                         Log.d(TAG,"exception");
@@ -107,13 +123,22 @@ public class OrderDetailActivity extends Activity {
 
         requestTaskData(taskId);
 
-        mTvOrder=(TextView)findViewById(R.id.tv_orderdetail_name);
-        mTvTitle=(TextView)findViewById(R.id.tv_titlebar);
-        mTvUser=(TextView)findViewById(R.id.tv_orderdetail_user);
-        mTvFood=(TextView)findViewById(R.id.tv_orderdetail_food);
-
-        mBtnClose=(Button)findViewById(R.id.btn_closeorder);
-        mBtnClose.setOnClickListener(new View.OnClickListener() {
+        mTvGuestId=(TextView)findViewById(R.id.tv_order_guestid);
+        mTvABTitle=(TextView)findViewById(R.id.tv_titlebar);
+        mTvAddress=(TextView)findViewById(R.id.tv_order_address);
+        mTvPrice=(TextView)findViewById(R.id.tv_order_price);
+        mTvPriceNow=(TextView)findViewById(R.id.tv_order_pricenow);
+        mTvDiscount=(TextView)findViewById(R.id.tv_order_discount);
+        mLvFood=(ListView)findViewById(R.id.lv_order_list);
+        mIvClose=(ImageView)findViewById(R.id.iv_order_close);
+        mRlBack=(RelativeLayout)findViewById(R.id.rl_back);
+        mRlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        mIvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             addLoading();
@@ -179,4 +204,48 @@ public class OrderDetailActivity extends Activity {
             loadingUI = null;
         }
     }
+
+
+
+    class FoodListAdapter extends BaseAdapter{
+
+
+        private List<Food> list;
+        private Context context;
+        public FoodListAdapter(Context context,List<Food> foods){
+            this.context=context;
+            this.list=foods;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView= LayoutInflater.from(context).inflate(R.layout.item_order_list,parent,false);
+            TextView name=(TextView)convertView.findViewById(R.id.tv_order_foodname);
+            TextView count=(TextView)convertView.findViewById(R.id.tv_order_foodcount);
+            TextView price=(TextView)convertView.findViewById(R.id.tv_order_foodprice);
+
+            name.setText(list.get(position).getName());
+            count.setText(list.get(position).getCount()+"份");
+            price.setText("单价："+list.get(position).getPrice());
+            return convertView;
+        }
+    }
+
+
 }

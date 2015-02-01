@@ -83,6 +83,15 @@ public class ClosedOrdersFragment extends Fragment {
         return v;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mLists= new OrderSQLUtils(getActivity()).queryOrders();
+        mAdapter=new TaskAdapter(getActivity(),mLists);
+        mLvList.setAdapter(mAdapter);
+    }
+
     private class TaskAdapter extends BaseAdapter {
         private final String TAG = TaskAdapter.class.getName();
         private Context context;

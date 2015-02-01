@@ -171,6 +171,11 @@ public class PendingOrdersFragment extends Fragment implements AdapterView.OnIte
         startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestTaskData();
+    }
 
     @Override
     public void onPause() {

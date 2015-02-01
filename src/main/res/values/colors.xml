@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="order_actionbar">#1EB0ED</color>
+    <color name="order_guestid">#7AB600</color>
+    <color name="order_prcie">#00A8EC</color>
+    <color name="order_foodname">#FC6D00</color>
     <color name="white">#ffffffff</color>
     <color name="ivory">#fffffff0</color>
     <color name="lightyellow">#ffffffe0</color>
