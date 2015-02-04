@@ -20,6 +20,8 @@ import com.arrking.express.model.User;
 import com.google.gson.Gson;
 
 import cn.trinea.android.common.util.StringUtils;
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * Created by hain on 05/01/2015.
@@ -152,6 +154,7 @@ public class SplashScreenActivity extends Activity {
 
     }
 
+
     /**
      * THIS IS FUNCTION FOR CHECKING INTERNET CONNECTION
      *
@@ -165,5 +168,17 @@ public class SplashScreenActivity extends Activity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
     }
 }
