@@ -5,12 +5,12 @@ package com.arrking.express.common;
  */
 public class Constants {
 
-    public static final String serverHost = "bizflow.mybluemix.net";
+    public static final String serverHost = "bizflow.arrking.com";
     public static final String serverProtocol = "http";
     // if server is a testing instance, set the port
     // if the server is running in bluemix, just set it <0
     public static final int serverPort = -1;
-    public static final String serverRestRootPath = "service";
+    public static final String serverRestRootPath = "server/service";
 
     // user properties names
     public static final String USER_FIRST_NAME = "userFirstName";
@@ -29,5 +29,6 @@ public class Constants {
 
     // server request
     public static final String HTTP_HEADER_APP_JSON = "application/json";
+    public static final String HTTP_HEADER_KEY_ACCEPT = "Accept";
 
 }

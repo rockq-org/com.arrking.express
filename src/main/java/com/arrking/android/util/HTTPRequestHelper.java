@@ -64,7 +64,7 @@ import cn.trinea.android.common.util.StringUtils;
  */
 public class HTTPRequestHelper {
 
-    private static final String CLASSTAG = HTTPRequestHelper.class.getSimpleName();
+    private static final String CLASSTAG = HTTPRequestHelper.class.getName();
 
     private static final int POST_TYPE = 1;
     private static final int GET_TYPE = 2;
@@ -163,18 +163,29 @@ public class HTTPRequestHelper {
         if ((additionalHeaders != null) && (additionalHeaders.size() > 0)) {
             sendHeaders.putAll(additionalHeaders);
         }
-        sendHeaders.put(HTTPRequestHelper.CONTENT_TYPE, Constants.HTTP_HEADER_APP_JSON);
+//        sendHeaders.put(HTTPRequestHelper.CONTENT_TYPE, Constants.HTTP_HEADER_APP_JSON);
 
         if (sendHeaders.size() > 0) {
             client.addRequestInterceptor(new HttpRequestInterceptor() {
 
                 public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
-                    Log.d(CLASSTAG, "get header ..." + request.getHeaders(Constants.HTTP_HEADER_APP_JSON));
+                    request.removeHeaders(CONTENT_TYPE);
+                    request.removeHeaders(Constants.HTTP_HEADER_KEY_ACCEPT);
                     for (String key : sendHeaders.keySet()) {
-                        Log.d(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG + " adding header: " + key + " | "
-                                + sendHeaders.get(key));
+//                        Log.d(CLASSTAG, " " + HTTPRequestHelper.CLASSTAG + " adding header: " + key + " | "
+//                                + sendHeaders.get(key));
                         request.addHeader(key, sendHeaders.get(key));
                     }
+                    Log.d(CLASSTAG, "++++++++++++++ start to print headers +++++++++++++++++");
+                    //get all headers
+                    Header[] headers = request.getAllHeaders();
+                    for (Header header : headers) {
+                        Log.d(CLASSTAG, "Key : " + header.getName()
+                                + " ,Value : " + header.getValue());
+                    }
+                    Log.d(CLASSTAG, "++++++++++++++ end to print headers +++++++++++++++++");
+
+
                 }
             });
         }
