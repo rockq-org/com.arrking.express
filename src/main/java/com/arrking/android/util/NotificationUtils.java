@@ -26,7 +26,7 @@ public class NotificationUtils {
         baseNF.icon = R.drawable.ic_launcher;
         //通知时在状态栏显示的内容
         baseNF.tickerText = title;
-        baseNF.sound =  Uri.parse("android.resource://com.arrking.express/"+R.raw.test);
+        baseNF.sound =  Uri.parse("android.resource://com.arrking.express/"+R.raw.new_order);
         baseNF.defaults |= Notification.DEFAULT_VIBRATE;
         Intent intent = new Intent(context,MainActivity.class);
         PendingIntent pd = PendingIntent.getActivity(context, 0, intent, 0);
