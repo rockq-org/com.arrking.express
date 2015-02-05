@@ -35,7 +35,7 @@ public class MyJPushReceiver extends BroadcastReceiver {
                         
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
         	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
-            NotificationUtils.notify(context,"这是title", bundle.getString(JPushInterface.EXTRA_MESSAGE));
+            NotificationUtils.notify(context,"美食速递", bundle.getString(JPushInterface.EXTRA_MESSAGE));
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
